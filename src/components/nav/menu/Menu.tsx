@@ -3,6 +3,7 @@ import './menu.scss'
 import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
+import { Categorias, TCategorias } from '../../slides/ICategorias';
 
 class Menu extends React.Component {
   private _active: boolean = false
@@ -36,16 +37,16 @@ class Menu extends React.Component {
   }
 
   public render() {
+    const categorias: JSX.Element[] = []
+    Categorias.forEach(cat => categorias.push(<li key={cat}>{cat}</li>))
+
     return (
 
       <div className='menu'>
 
         <div hidden={this._hidden} className='open'>
           <ul ref='ul'>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit amet.</li>
-            <li>Lorem, ipsum dolor.</li>
-            <li>Lorem ipsum dolor sit amet consectetur.</li>
+            {categorias}
           </ul>
         </div>
 
