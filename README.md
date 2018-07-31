@@ -1,1 +1,1 @@
-# react-template-site
+# react-pagination-template
