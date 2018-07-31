@@ -1,0 +1,30 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: #fafafa;
+}
+
+img {
+  width: 100%;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 75px;
+}
+
+@media (max-width: 769px) {
+  .container {
+    width: calc(100% - 30px);
+  }
+  .hide-phone {
+    display: none !important;
+  }
+}
