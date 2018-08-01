@@ -6,17 +6,21 @@ import { sliderEvents } from '../events';
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
 
-class Nav extends React.Component<{ initialTopico: string }> {
+interface INavProps { initialTopico: string }
+interface INavState { activeTopico: string }
 
-  public activeTopico: string = this.props.initialTopico
+class Nav extends React.Component<INavProps, INavState> {
 
+  public state = {
+    activeTopico: this.props.initialTopico,
+  }
   constructor(props: any) {
     super(props)
 
     sliderEvents.addListener('TOPICO_CHANGE', nome => {
-      this.activeTopico = nome
+      alert(nome)
 
-      this.forceUpdate()
+      this.setState({ activeTopico: nome })
     })
   }
 
@@ -35,7 +39,7 @@ class Nav extends React.Component<{ initialTopico: string }> {
 
         <div className="col webaula hide-phone">
           <span className='webaula'>Webaula XXXX</span>
-          <span className='unidade'>{this.activeTopico}</span>
+          <span className='unidade'>{this.state.activeTopico}</span>
         </div>
 
         <div className='col seta' onClick={this.voltar}>

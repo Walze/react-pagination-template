@@ -3,53 +3,66 @@ import './menu.scss'
 import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
-import { Categorias } from '../../slides/Categorias';
+import { TopicosNomes } from '../../slidesDeclarations';
 
-class Menu extends React.Component {
-  private _active: boolean = false
-  private _running: boolean = false
-  private _hidden: boolean = true
+interface IMenuState {
+  active: boolean
+  running: boolean
+  hidden: boolean
+}
+
+class Menu extends React.Component<{}, IMenuState> {
+  public state = {
+    active: false,
+    running: false,
+    hidden: true,
+  }
 
   public async menuClick() {
-    if (this._running) return
-    this._running = true
+    if (this.state.running) return
 
-    this.handleHidden()
+    this.setState({
+      running: true,
+      hidden: false,
+    }, async () => {
 
-    const ul = this.refs.ul as HTMLElement
+      const ul = this.refs.ul as HTMLElement
 
-    const li = ul.children[0];
-    const duration = getTransitionDelay(li)
+      const li = ul.children[0];
+      const duration = getTransitionDelay(li)
 
-    await loopDelay(ul.childElementCount, duration, (i, total) => {
+      await loopDelay(ul.childElementCount, duration, (i, total) => {
 
-      if (this._active) {
-        ul.classList.remove('active')
-        ul.children[i].classList.remove('active')
-      } else {
-        ul.classList.add('active')
-        ul.children[(total - 1) - i].classList.add('active')
-      }
+        if (this.state.active) {
+          ul.classList.remove('active')
+          ul.children[i].classList.remove('active')
+        } else {
+          ul.classList.add('active')
+          ul.children[(total - 1) - i].classList.add('active')
+        }
+
+      })
+
+      this.setState({
+        hidden: this.state.active,
+        active: !this.state.active,
+        running: false,
+      })
 
     })
-
-    this._active = !this._active
-    this._running = false
-
-    this.forceUpdate()
   }
 
   public render() {
-    const categorias: JSX.Element[] = []
-    Categorias.forEach(cat => categorias.push(<li key={cat}>{cat}</li>))
+    const topicos =
+      TopicosNomes.map(topic => <li key={topic}>{topic}</li>)
 
     return (
 
       <div className='menu'>
 
-        <div hidden={this._hidden} className='open'>
+        <div hidden={this.state.hidden} className='open'>
           <ul ref='ul'>
-            {categorias}
+            {topicos}
           </ul>
         </div>
 
@@ -60,14 +73,6 @@ class Menu extends React.Component {
       </div>
 
     )
-  }
-
-  private handleHidden() {
-    if (this._hidden) {
-      this._hidden = !this._hidden;
-      this.forceUpdate();
-    } else
-      this._hidden = !this._hidden;
   }
 
 }

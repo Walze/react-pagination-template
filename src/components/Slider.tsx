@@ -3,12 +3,23 @@ import * as React from 'react'
 import { sliderEvents } from './events'
 import Topico from './slides/Categorias';
 
-class Slider extends React.Component<{ topicos: any[] }> {
+interface ISliderState {
+  topicos: any[],
+  topicoIndex: number,
+  slideIndex: number,
+}
 
-  public topicos = this.props.topicos
+interface ISliderProps {
+  topicos: any[]
+}
 
-  public topicoIndex = 0
-  public slideIndex = 0
+class Slider extends React.Component<ISliderProps, ISliderState> {
+
+  public state = {
+    topicos: this.props.topicos,
+    topicoIndex: 0,
+    slideIndex: 0,
+  }
 
   constructor(props: any) {
     super(props)
@@ -22,11 +33,15 @@ class Slider extends React.Component<{ topicos: any[] }> {
 
       <div className='slider'>
         <p>
-          Topico: {this.topicoIndex + 1}
+          Topico: {this.state.topicoIndex + 1}
         </p>
 
         <p>
-          Slide: {this.slideIndex + 1}
+          Slide: {this.state.slideIndex + 1}
+        </p>
+
+        <p>
+          Topico Nome: {this.activeTopico.props.nome}
         </p>
 
         {this.activeSlide}
@@ -36,53 +51,59 @@ class Slider extends React.Component<{ topicos: any[] }> {
   }
 
   public get activeTopico() {
-    return this.topicos[this.topicoIndex] as Topico
+    return this.state.topicos[this.state.topicoIndex] as Topico
   }
 
   public get activeSlide() {
-    return this.activeTopico.props.slides[this.slideIndex]
+    return this.activeTopico.props.slides[this.state.slideIndex]
   }
 
   private _updateSlide() {
     sliderEvents.emit('TOPICO_CHANGE', this.activeTopico.props.nome)
-
-    this.forceUpdate()
   }
 
   private _voltarSlide() {
-    if (this.slideIndex <= 0)
+    if (this.state.slideIndex <= 0)
       return this._voltarTopico()
 
-    this.slideIndex--
+    this.setState(
+      { slideIndex: this.state.slideIndex - 1 },
+      () => this._updateSlide(),
+    )
 
-    this._updateSlide()
   }
 
   private _avancarSlide() {
-    if (this.slideIndex + 1 >= this.activeTopico.props.slides.length)
+    if (this.state.slideIndex + 1 >= this.activeTopico.props.slides.length)
       return this._avancarTopico()
 
-    this.slideIndex++
-
-    this._updateSlide()
+    this.setState({
+      slideIndex: this.state.slideIndex + 1,
+    },
+      () => this._updateSlide(),
+    )
   }
 
   private _voltarTopico() {
-    if (this.topicoIndex <= 0) return
+    if (this.state.topicoIndex <= 0) return
 
-    this.topicoIndex--
-    this.slideIndex = this.activeTopico.props.slides.length - 1
-
-    this._updateSlide()
+    this.setState({
+      topicoIndex: this.state.topicoIndex - 1,
+      slideIndex: this.activeTopico.props.slides.length - 1,
+    },
+      () => this._updateSlide(),
+    )
   }
 
   private _avancarTopico() {
-    if (this.topicoIndex + 1 >= this.topicos.length) return
+    if (this.state.topicoIndex + 1 >= this.state.topicos.length) return
 
-    this.topicoIndex++
-    this.slideIndex = 0
-
-    this._updateSlide()
+    this.setState({
+      topicoIndex: this.state.topicoIndex + 1,
+      slideIndex: 0,
+    },
+      () => this._updateSlide(),
+    )
   }
 
 }

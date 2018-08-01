@@ -12,6 +12,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
+    "noEmitOnError": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
