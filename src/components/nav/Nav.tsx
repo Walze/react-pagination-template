@@ -14,6 +14,9 @@ class Nav extends React.Component<INavProps, INavState> {
   public state = {
     activeTopico: this.props.initialTopico,
   }
+
+  public menu: Menu
+
   constructor(props: any) {
     super(props)
 
@@ -28,6 +31,10 @@ class Nav extends React.Component<INavProps, INavState> {
 
   public avancar() {
     sliderEvents.emit('avancar')
+  }
+
+  public menuClick = () => {
+    this.menu.menuClick()
   }
 
   public render() {
@@ -49,8 +56,8 @@ class Nav extends React.Component<INavProps, INavState> {
           <img src={setaR} />
         </div>
 
-        <div className="col" onClick={() => (this.refs.menu as Menu).menuClick()}>
-          <Menu ref='menu'></Menu>
+        <div className="col" onClick={this.menuClick}>
+          <Menu ref={ref => this.menu = ref!} />
         </div>
 
       </div>

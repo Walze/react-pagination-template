@@ -18,6 +18,8 @@ class Menu extends React.Component<{}, IMenuState> {
     hidden: true,
   }
 
+  public openUL: HTMLElement
+
   public async menuClick() {
     if (this.state.running) return
 
@@ -26,7 +28,7 @@ class Menu extends React.Component<{}, IMenuState> {
       hidden: false,
     }, async () => {
 
-      const ul = this.refs.ul as HTMLElement
+      const ul = this.openUL as HTMLElement
 
       const li = ul.children[0];
       const duration = getTransitionDelay(li)
@@ -61,7 +63,7 @@ class Menu extends React.Component<{}, IMenuState> {
       <div className='menu'>
 
         <div hidden={this.state.hidden} className='open'>
-          <ul ref='ul'>
+          <ul ref={ref => this.openUL = ref!}>
             {topicos}
           </ul>
         </div>
