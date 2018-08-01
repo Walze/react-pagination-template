@@ -1,40 +1,11 @@
 import * as React from 'react'
 
-import { ExpandedLog } from '../helpers/functions'
 import { sliderEvents } from './events'
+import Topico from './slides/Categorias';
 
-import Slide1 from './slides/Slide1'
-import Slide2 from './slides/Slide2'
-import Slide3 from './slides/Slide3'
-import Topico, { TopicoArray, ITopico } from './slides/Categorias';
+class Slider extends React.Component<{ topicos: any[] }> {
 
-const TOPICOS_INIT: any[] = [
-  <Topico
-    nome='CAT1'
-    slides={[
-      <Slide3 />,
-      <Slide2 />,
-    ]}
-  />,
-  <Topico
-    nome='CAT2'
-    slides={[
-      <Slide2 />,
-      <Slide1 />,
-    ]}
-  />,
-  <Topico
-    nome='CAT3'
-    slides={[
-      <Slide2 />,
-      <Slide3 />,
-    ]}
-  />,
-]
-
-class Slider extends React.Component {
-
-  public topicos = TOPICOS_INIT
+  public topicos = this.props.topicos
 
   public topicoIndex = 0
   public slideIndex = 0
@@ -73,7 +44,8 @@ class Slider extends React.Component {
   }
 
   private _updateSlide() {
-    sliderEvents.emit('changes', this)
+    sliderEvents.emit('TOPICO_CHANGE', this.activeTopico.props.nome)
+
     this.forceUpdate()
   }
 
