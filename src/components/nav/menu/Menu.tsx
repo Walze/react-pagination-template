@@ -23,10 +23,13 @@ class Menu extends React.Component {
 
     await loopDelay(ul.childElementCount, duration, (i, total) => {
 
-      if (this._active)
+      if (this._active) {
+        ul.classList.remove('active')
         ul.children[i].classList.remove('active')
-      else
+      } else {
+        ul.classList.add('active')
         ul.children[(total - 1) - i].classList.add('active')
+      }
 
     })
 

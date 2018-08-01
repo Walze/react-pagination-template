@@ -10,12 +10,15 @@
     justify-content: center;
     align-items: center;
     .icone {
+      border-radius: 5px;
+      padding: 0 7px;
       width: 50px;
     }
   }
   .open {
-    overflow: hidden;
     min-width: 320px;
+    width: 100%;
+    overflow: hidden;
     width: 100%;
     position: absolute;
     bottom: 75px;
@@ -30,15 +33,18 @@
         padding: 20px;
         border-color: #222;
         transform: translateX(100%);
-        &:hover {
+        &.active:hover {
           background: rgba($color: #444, $alpha: .333) !important;
-          border-left: 5px solid #222;
+          border: none;
+          border-left: 6px solid #222;
           color: black;
         }
         &:nth-child(even) {
           background: #333;
         }
         &.active {
+          border-left: #222 3px solid;
+          border-right: #222 3px solid;
           transform: translateX(0);
         }
       }
