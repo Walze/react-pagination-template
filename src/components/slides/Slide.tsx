@@ -1,13 +1,9 @@
 import * as React from 'react'
 import { TCategorias } from './Categorias';
 
-interface ISlideProps {
-  categoria: TCategorias
-}
+abstract class Slide extends React.Component {
 
-abstract class Slide extends React.Component<ISlideProps> {
-
-  constructor(props: ISlideProps) {
+  constructor(props: any) {
     super(props)
   }
 }

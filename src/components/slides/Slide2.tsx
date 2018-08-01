@@ -1,15 +1,15 @@
 import * as React from 'react'
 import Slide from './Slide';
 
-class Slide1 extends Slide {
+class Slide2 extends Slide {
 
   public render() {
 
     return (
 
-      <div className='slide1'>
+      <div className='slide2'>
 
-        <div>slide 11</div>
+        <div>slide 2</div>
 
       </div>
 
@@ -19,4 +19,4 @@ class Slide1 extends Slide {
 
 }
 
-export default Slide1
+export default Slide2
