@@ -8,11 +8,11 @@ import Slide2 from './slides/Slide2'
 import Slide3 from './slides/Slide3'
 import Topico, { TopicoArray, ITopico } from './slides/Categorias';
 
-const TOPICOS_INIT: TopicoArray = [
+const TOPICOS_INIT: any[] = [
   <Topico
     nome='CAT1'
     slides={[
-      <Slide1 />,
+      <Slide3 />,
       <Slide2 />,
     ]}
   />,
@@ -20,13 +20,13 @@ const TOPICOS_INIT: TopicoArray = [
     nome='CAT2'
     slides={[
       <Slide2 />,
-      <Slide3 />,
+      <Slide1 />,
     ]}
   />,
   <Topico
     nome='CAT3'
     slides={[
-      <Slide1 />,
+      <Slide2 />,
       <Slide3 />,
     ]}
   />,
@@ -38,7 +38,6 @@ class Slider extends React.Component {
 
   public topicoIndex = 0
   public slideIndex = 0
-  public activeTopico = this.topicos[0]
 
   constructor(props: any) {
     super(props)
@@ -51,50 +50,67 @@ class Slider extends React.Component {
     return (
 
       <div className='slider'>
-        {this.activeTopico}
+        <p>
+          Topico: {this.topicoIndex + 1}
+        </p>
+
+        <p>
+          Slide: {this.slideIndex + 1}
+        </p>
+
+        {this.activeSlide}
       </div>
 
     )
   }
 
-  private _topicoChange() {
-    this.activeTopico = this.topicos[this.topicoIndex]
+  public get activeTopico() {
+    return this.topicos[this.topicoIndex] as Topico
+  }
 
+  public get activeSlide() {
+    return this.activeTopico.props.slides[this.slideIndex]
+  }
+
+  private _updateSlide() {
     sliderEvents.emit('changes', this)
     this.forceUpdate()
   }
 
   private _voltarSlide() {
-    if (this.slideIndex <= 0) return
+    if (this.slideIndex <= 0)
+      return this._voltarTopico()
 
     this.slideIndex--
 
-    this._topicoChange()
+    this._updateSlide()
   }
 
   private _avancarSlide() {
-    const topicoEL = this.topicos[this.slideIndex]
-    const topicoPROP = topicoEL.props
+    if (this.slideIndex + 1 >= this.activeTopico.props.slides.length)
+      return this._avancarTopico()
 
-    console.log(topicoEL.type, topicoPROP instanceof Topico)
-    // if (this.slideIndex + 1 >= this.topicos[this.slideIndex].props) return
+    this.slideIndex++
 
+    this._updateSlide()
   }
 
   private _voltarTopico() {
     if (this.topicoIndex <= 0) return
 
     this.topicoIndex--
+    this.slideIndex = this.activeTopico.props.slides.length - 1
 
-    this._topicoChange()
+    this._updateSlide()
   }
 
   private _avancarTopico() {
     if (this.topicoIndex + 1 >= this.topicos.length) return
 
     this.topicoIndex++
+    this.slideIndex = 0
 
-    this._topicoChange()
+    this._updateSlide()
   }
 
 }

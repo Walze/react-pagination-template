@@ -12,8 +12,8 @@ class Nav extends React.Component {
   constructor(props: any) {
     super(props)
 
-    sliderEvents.addListener('changes', ({ topicoIndex, activeTopico }: Slider) => {
-      console.log(topicoIndex, activeTopico)
+    sliderEvents.addListener('changes', ({ activeTopico, activeSlide }: Slider) => {
+      console.log(activeTopico, activeSlide)
     })
   }
 
