@@ -1,23 +1,14 @@
 import * as React from 'react'
-import { TCategorias } from './ICategorias';
+import { TCategorias } from './Categorias';
 
-abstract class Slide extends React.Component {
+interface ISlideProps {
+  categoria: TCategorias
+}
 
-  private _categoria: TCategorias
+abstract class Slide extends React.Component<ISlideProps> {
 
-  get categoria() {
-    if (!this._categoria) throw new Error('categoria vazia')
-
-    return this._categoria
-  }
-
-  set categoria(value: TCategorias) {
-    this._categoria = value
-  }
-
-  constructor(props: any) {
+  constructor(props: ISlideProps) {
     super(props)
-
   }
 }
 

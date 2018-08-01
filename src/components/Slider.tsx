@@ -7,11 +7,8 @@ import Slide1 from './slides/Slide1'
 
 class Slider extends React.Component {
 
-  public slideIndex = 0
-  public activeSlide = <Slide1 />
-
-  private _slides = [
-    <Slide1 />,
+  public readonly slides = [
+    <Slide1 categoria='Categoria1' />,
     <h1>Lorem2.</h1>,
     <h1>Lorem, ipsum.</h1>,
     <h1>Lorem, ipsum dolor.</h1>,
@@ -20,6 +17,9 @@ class Slider extends React.Component {
     <h1>Lorem ipsum dolor sit amet consectetur.</h1>,
     <h1>Lorem ipsum dolor, sit amet consectetur adipisicing.</h1>,
   ]
+
+  public slideIndex = 0
+  public activeSlide = this.slides[0]
 
   constructor(props: any) {
     super(props)
@@ -44,7 +44,7 @@ class Slider extends React.Component {
   }
 
   private _slideChange() {
-    this.activeSlide = this._slides[this.slideIndex]
+    this.activeSlide = this.slides[this.slideIndex]
 
     sliderEvents.emit('changes', this)
     this.forceUpdate()
@@ -59,7 +59,7 @@ class Slider extends React.Component {
   }
 
   private _avancar() {
-    if (this.slideIndex + 1 >= this._slides.length) return
+    if (this.slideIndex + 1 >= this.slides.length) return
 
     this.slideIndex++
 

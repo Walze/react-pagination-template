@@ -3,7 +3,7 @@ import './menu.scss'
 import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
-import { Categorias, TCategorias } from '../../slides/ICategorias';
+import { Categorias } from '../../slides/Categorias';
 
 class Menu extends React.Component {
   private _active: boolean = false
