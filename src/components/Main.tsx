@@ -4,7 +4,7 @@ import './main.scss'
 import Nav from './nav/Nav'
 import Slider from './Slider'
 import Topico from './slides/Categorias';
-import TOPICOS_INIT from './slidesDeclarations';
+import TOPICOS_INIT from './TopicosDeclarations';
 
 class Main extends React.Component {
 

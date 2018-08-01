@@ -18,8 +18,6 @@ class Nav extends React.Component<INavProps, INavState> {
     super(props)
 
     sliderEvents.addListener('TOPICO_CHANGE', nome => {
-      alert(nome)
-
       this.setState({ activeTopico: nome })
     })
   }
