@@ -6,6 +6,7 @@ import Slide1 from './slides/Slide1';
 import Topico from './Topico';
 import Slide2 from './slides/Slide2';
 import { Topicos } from './Topicos';
+import { ReactJSXElement } from '../types';
 
 // interface IMainState { }
 
@@ -15,7 +16,9 @@ class Main extends React.Component<{}, {}> {
 
   public render() {
 
-    const topicos = this._renderTopicos()
+    const topicos = this._renderTopicos() as Topicos
+    console.warn(topicos)
+
 
     return (
 
@@ -23,8 +26,8 @@ class Main extends React.Component<{}, {}> {
 
         {/* this.topicos undefined */}
         <Nav
-          topicos={this.topicos.state.nomes}
-          defaultTopico={this.topicos.state.defaultTopico}
+          topicos={topicos.state.nomes}
+          defaultTopico={topicos.state.defaultTopico}
         />
 
         <div className="container">
@@ -39,9 +42,9 @@ class Main extends React.Component<{}, {}> {
     )
   }
 
-  private _renderTopicos = () =>
+  private _renderTopicos: () => ReactJSXElement<Topicos> = () =>
     <Topicos
-      ref={ref => this.topicos = ref!}
+      ref={ref => ref!}
     >
       <Topico key='0' nome='CAT1'>
 
