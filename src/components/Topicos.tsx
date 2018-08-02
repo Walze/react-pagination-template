@@ -11,26 +11,17 @@ interface ITopicosProps {
 interface ITopicosState {
   topicos: Topico[]
   topicoIndex: number
-}
-
-export interface ITopicosInfo {
-  names: string[];
-  default: string;
+  nomes: string[]
+  defaultTopico: string
 }
 
 export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
-  public state = {
+  public state: ITopicosState = {
     topicos: this.props.children as Topico[],
-    topicoIndex: 0
-  }
-
-  public get all() {
-    return this.state.topicos.map(top => top.props.nome)
-  }
-
-  public get default() {
-    return this.state.topicos[this.state.topicoIndex].props.nome
+    topicoIndex: 0,
+    nomes: (this.props.children as Topico[]).map(top => top.props.nome),
+    defaultTopico: (this.props.children as Topico[])[0].props.nome
   }
 
   public render() {

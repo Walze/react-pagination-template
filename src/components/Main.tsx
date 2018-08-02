@@ -7,40 +7,30 @@ import Topico from './Topico';
 import Slide2 from './slides/Slide2';
 import { Topicos } from './Topicos';
 
+// interface IMainState { }
 
 class Main extends React.Component<{}, {}> {
 
-
-  public topicos: Topicos = {} as Topicos
+  public topicos: Topicos
 
   public render() {
+
+    const topicos = this._renderTopicos()
+
     return (
 
       <div>
 
-
+        {/* this.topicos undefined */}
         <Nav
-          topicos={this.topicos.all}
-          defaultTopico={this.topicos.default}
+          topicos={this.topicos.state.nomes}
+          defaultTopico={this.topicos.state.defaultTopico}
         />
 
         <div className="container">
           <h1>lorem</h1>
 
-          {/* ref undefined */}
-          <Topicos
-            ref={ref => {
-              if (ref) return this.topicos = ref
-              else return ref
-            }}
-          >
-            <Topico key='0' nome='CAT1'>
-
-              <Slide1 />
-              <Slide2 />
-
-            </Topico>
-          </Topicos>
+          {topicos}
 
         </div>
 
@@ -48,6 +38,25 @@ class Main extends React.Component<{}, {}> {
 
     )
   }
+
+  private _renderTopicos = () =>
+    <Topicos
+      ref={ref => this.topicos = ref!}
+    >
+      <Topico key='0' nome='CAT1'>
+
+        <Slide1 />
+        <Slide2 />
+
+      </Topico>
+
+      <Topico key='1' nome='CAT2'>
+
+        <Slide1 />
+        <Slide2 />
+
+      </Topico>
+    </Topicos>
 
 }
 
