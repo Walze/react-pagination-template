@@ -1,17 +1,15 @@
 import * as React from 'react'
 import Slide from './Slide';
+import { ReactJSXElement } from '../../types';
 
-export type SlideArray = Array<React.ReactElement<Slide>>
-export type TopicoArray = Array<React.ReactElement<Topico>>
-
-export interface ITopico {
+export interface ITopicoProps {
   nome: string,
-  slides: SlideArray
+  slides: Array<ReactJSXElement<Slide>>
 }
 
-class Topico extends React.Component<ITopico> {
+class Topico extends React.Component<ITopicoProps> {
 
-  constructor(props: ITopico) {
+  constructor(props: ITopicoProps) {
     super(props)
   }
 

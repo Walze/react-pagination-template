@@ -1,11 +1,14 @@
 import * as React from 'react'
 
-import Topico from "./slides/Categorias";
-import Slide3 from './slides/Slide3';
-import Slide2 from './slides/Slide2';
-import Slide1 from './slides/Slide1';
+import { ReactJSXElement } from '../types';
 
-const TOPICOS_INIT: any[] = [
+import Topico from "./slides/Categorias"
+import Slide3 from './slides/Slide3'
+import Slide2 from './slides/Slide2'
+import Slide1 from './slides/Slide1'
+
+
+const TOPICOS_INIT: Array<ReactJSXElement<Topico>> = [
   <Topico
     key='0'
     nome='CAT1'
