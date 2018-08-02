@@ -3,38 +3,58 @@ import * as React from 'react'
 import { ReactJSXElement } from '../types';
 
 import Topico from "./Topico"
-import Slide3 from './slides/Slide3'
-import Slide2 from './slides/Slide2'
-import Slide1 from './slides/Slide1'
+
+interface ITopicosProps {
+  children: Array<ReactJSXElement<Topico>> | ReactJSXElement<Topico>
+}
+
+interface ITopicosState {
+  topicos: Topico[]
+  topicoIndex: number
+}
+
+export interface ITopicosInfo {
+  names: string[];
+  default: string;
+}
+
+export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
+
+  public state = {
+    topicos: this.props.children as Topico[],
+    topicoIndex: 0
+  }
+
+  public get all() {
+    return this.state.topicos.map(top => top.props.nome)
+  }
+
+  public get default() {
+    return this.state.topicos[this.state.topicoIndex].props.nome
+  }
+
+  public render() {
+    return (
+      <div>
+        {this.state.topicos[this.state.topicoIndex]}
+      </div>
+    )
+  }
 
 
-const TOPICOS_INIT: Array<ReactJSXElement<Topico>> = [
-  <Topico
-    key='0'
-    nome='CAT1'
-    slides={[
-      <Slide3 key={Slide3.name} />,
-      <Slide2 key={Slide2.name} />,
-    ]}
-  />,
-  <Topico
-    key='1'
-    nome='CAT2'
-    slides={[
-      <Slide2 key={Slide2.name} />,
-      <Slide1 key={Slide1.name} />,
-    ]}
-  />,
-  <Topico
-    key='2'
-    nome='CAT3'
-    slides={[
-      <Slide2 key={Slide2.name} />,
-      <Slide3 key={Slide3.name} />,
-    ]}
-  />,
-]
+  private _voltar() {
+    if (this.state.topicoIndex <= 0) return
 
-export const TopicosNomes = TOPICOS_INIT.map((topico: Topico) => topico.props.nome)
+    this.setState({
+      topicoIndex: this.state.topicoIndex - 1
+    })
+  }
 
-export default TOPICOS_INIT
+  private _avancar() {
+    if (this.state.topicoIndex + 1 >= this.state.topicos.length) return
+
+    this.setState({
+      topicoIndex: this.state.topicoIndex + 1
+    })
+  }
+}

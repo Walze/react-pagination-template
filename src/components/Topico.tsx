@@ -4,21 +4,39 @@ import { ReactJSXElement } from '../types';
 
 export interface ITopicoProps {
   nome: string,
-  slides: Array<ReactJSXElement<Slide>>
+  children: Array<ReactJSXElement<Slide>> | ReactJSXElement<Slide>
 }
 
-class Topico extends React.Component<ITopicoProps> {
+export interface ITopicoState {
+  slides: Slide[]
+  slideIndex: number
+}
 
-  constructor(props: ITopicoProps) {
-    super(props)
+class Topico extends React.Component<ITopicoProps, ITopicoState> {
+
+  public state = {
+    slideIndex: 0,
+    slides: this.props.children as Slide[]
   }
 
   public render() {
     return (
-      <div>
-        {this.props.nome}
-      </div>
+      <div>{this.state.slides[this.state.slideIndex]}</div>
     )
+  }
+
+  private _voltar() {
+    if (this.state.slideIndex <= 0)
+      return
+
+    this.setState({ slideIndex: this.state.slideIndex - 1 })
+  }
+
+  private _avancar() {
+    if (this.state.slideIndex + 1 >= this.state.slides.length)
+      return
+
+    this.setState({ slideIndex: this.state.slideIndex + 1 })
   }
 }
 

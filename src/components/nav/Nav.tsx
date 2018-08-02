@@ -5,14 +5,18 @@ import { sliderEvents } from '../events';
 
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
+import Topico from '../Topico';
 
-interface INavProps { initialTopico: string }
+interface INavProps {
+  defaultTopico: string
+  topicos: string[]
+}
 interface INavState { activeTopico: string }
 
 class Nav extends React.Component<INavProps, INavState> {
 
   public state = {
-    activeTopico: this.props.initialTopico,
+    activeTopico: this.props.defaultTopico,
   }
 
   public menu: Menu
@@ -23,6 +27,10 @@ class Nav extends React.Component<INavProps, INavState> {
     sliderEvents.addListener('TOPICO_CHANGE', nome => {
       this.setState({ activeTopico: nome })
     })
+  }
+
+  public componentDidMount() {
+    console.log(this)
   }
 
   public voltar() {
@@ -57,7 +65,7 @@ class Nav extends React.Component<INavProps, INavState> {
         </div>
 
         <div className="col" onClick={this.menuClick}>
-          <Menu ref={ref => this.menu = ref!} />
+          <Menu topicos={this.props.topicos} ref={ref => this.menu = ref!} />
         </div>
 
       </div>
