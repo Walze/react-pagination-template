@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Slide from './Slide';
+import Slide from '../Slide';
 
 class Slide1 extends Slide {
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { sliderEvents } from './events'
-import Topico from './slides/Categorias';
+import Topico from './Topico';
 
 interface ISliderState {
   topicos: any[],

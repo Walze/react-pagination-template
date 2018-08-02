@@ -3,7 +3,7 @@ import './menu.scss'
 import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
-import { TopicosNomes } from '../../TopicosDeclarations';
+import { TopicosNomes } from '../../Topicos';
 
 interface IMenuState {
   active: boolean

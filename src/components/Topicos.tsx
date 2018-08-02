@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { ReactJSXElement } from '../types';
 
-import Topico from "./slides/Categorias"
+import Topico from "./Topico"
 import Slide3 from './slides/Slide3'
 import Slide2 from './slides/Slide2'
 import Slide1 from './slides/Slide1'

@@ -3,8 +3,8 @@ import * as React from 'react'
 import './main.scss'
 import Nav from './nav/Nav'
 import Slider from './Slider'
-import Topico from './slides/Categorias';
-import TOPICOS_INIT from './TopicosDeclarations';
+import Topico from './Topico';
+import TOPICOS_INIT from './Topicos';
 
 class Main extends React.Component {
 
