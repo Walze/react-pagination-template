@@ -1,3 +1,3 @@
 import { EventEmitter } from 'events'
 
-export const sliderEvents = new EventEmitter()
+export const topicoEvents = new EventEmitter()

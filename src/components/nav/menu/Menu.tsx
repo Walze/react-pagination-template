@@ -3,10 +3,9 @@ import './menu.scss'
 import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
+import TopicosStore from '../../topicos/TopicosStore';
 
-interface IMenuProps {
-  topicos: string[]
-}
+// interface IMenuProps {}
 
 interface IMenuState {
   active: boolean
@@ -14,7 +13,7 @@ interface IMenuState {
   hidden: boolean
 }
 
-class Menu extends React.Component<IMenuProps, IMenuState> {
+class Menu extends React.Component<{}, IMenuState> {
   public state = {
     active: false,
     running: false,
@@ -58,7 +57,7 @@ class Menu extends React.Component<IMenuProps, IMenuState> {
   }
 
   public render() {
-    const topicos = [1]
+    const topicos = TopicosStore.nomes.map(nome => (<li>{nome}</li>))
 
     return (
 
@@ -66,7 +65,7 @@ class Menu extends React.Component<IMenuProps, IMenuState> {
 
         <div hidden={this.state.hidden} className='open'>
           <ul ref={ref => this.openUL = ref!}>
-            {this.props.topicos}
+            {topicos}
           </ul>
         </div>
 

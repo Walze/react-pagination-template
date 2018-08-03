@@ -1,22 +1,20 @@
 import * as React from 'react'
 import './nav.scss'
 import Menu from './menu/Menu';
-import { sliderEvents } from '../events';
+import { topicoEvents } from '../events'
 
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
-import Topico from '../Topico';
+import TopicosStore from '../topicos/TopicosStore';
 
-interface INavProps {
-  defaultTopico: string
-  topicos: string[]
-}
+// interface INavProps {}
+
 interface INavState { activeTopico: string }
 
-class Nav extends React.Component<INavProps, INavState> {
+class Nav extends React.Component<{}, INavState> {
 
   public state = {
-    activeTopico: this.props.defaultTopico,
+    activeTopico: TopicosStore.default,
   }
 
   public menu: Menu
@@ -24,9 +22,8 @@ class Nav extends React.Component<INavProps, INavState> {
   constructor(props: any) {
     super(props)
 
-    sliderEvents.addListener('TOPICO_CHANGE', nome => {
-      this.setState({ activeTopico: nome })
-    })
+    topicoEvents.once('changes', () => this.setState({ activeTopico: TopicosStore.default }))
+    topicoEvents.addListener('TOPICO_CHANGE', topico => this.setState({ activeTopico: topico }))
   }
 
   public componentDidMount() {
@@ -34,11 +31,11 @@ class Nav extends React.Component<INavProps, INavState> {
   }
 
   public voltar() {
-    sliderEvents.emit('voltar')
+    topicoEvents.emit('voltar')
   }
 
   public avancar() {
-    sliderEvents.emit('avancar')
+    topicoEvents.emit('avancar')
   }
 
   public menuClick = () => {
@@ -65,7 +62,7 @@ class Nav extends React.Component<INavProps, INavState> {
         </div>
 
         <div className="col" onClick={this.menuClick}>
-          <Menu topicos={this.props.topicos} ref={ref => this.menu = ref!} />
+          <Menu ref={ref => this.menu = ref!} />
         </div>
 
       </div>

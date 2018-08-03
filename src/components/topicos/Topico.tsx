@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Slide from './Slide';
-import { ReactJSXElement } from '../types';
+import Slide from './Slide'
+import { ReactJSXElement } from '../../types'
 
 export interface ITopicoProps {
   nome: string,
