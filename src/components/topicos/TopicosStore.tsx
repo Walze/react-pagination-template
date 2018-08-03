@@ -1,5 +1,5 @@
 import Topico from "./Topico";
-import { TopicoEvents } from '../Events';
+import { TopicosEvents } from './TopicosEvents';
 
 import Slide from "./Slide";
 
@@ -15,7 +15,7 @@ export default class TopicosStore {
         const topico = this.getTopico(topicoNome)
         topico.slideIndex = i
 
-        TopicoEvents.emit('SLIDE_CHANGE', topico.slideIndex)
+        TopicosEvents.emit('SLIDE_CHANGE', topico.slideIndex)
     }
 
     public static setupTopicos(array: Topico[]) {
@@ -27,7 +27,7 @@ export default class TopicosStore {
             }
         })
 
-        TopicoEvents.emit('TOPICOS_CHANGE', this._topicos)
+        TopicosEvents.emit('TOPICOS_CHANGE', this._topicos)
         return this._topicos.map(top => top.el)
     }
 
@@ -51,5 +51,19 @@ export default class TopicosStore {
         return this._topicos[0].el.props.nome
     }
 
+    static get topicoIndex() {
+        return this._topicoIndex
+    }
+
+    static set topicoIndex(i: number) {
+        this._topicoIndex = i
+
+        TopicosEvents.emit('TOPICO_CHANGE', {
+            index: this.topicoIndex,
+            nome: this._topicos[this.topicoIndex].el.props.nome
+        })
+    }
+
+    private static _topicoIndex: number = 0
     private static _topicos: ITopicoStoreItem[] = []
 }

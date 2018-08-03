@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Slide from './Slide'
 import { ReactJSXElement } from '../../types'
-import { TopicoEvents } from '../events';
+import { TopicosEvents } from './TopicosEvents';
 
 import TopicosStore from './TopicosStore';
 
@@ -23,15 +23,15 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
   }
 
   public componentWillMount() {
-    TopicoEvents.on('VOLTAR_SLIDE', this._voltar)
-    TopicoEvents.on('AVANCAR_SLIDE', this._avancar)
-    TopicoEvents.on('SLIDE_CHANGE', this._updateIndex)
+    TopicosEvents.on('VOLTAR_SLIDE', this._voltar)
+    TopicosEvents.on('AVANCAR_SLIDE', this._avancar)
+    TopicosEvents.on('SLIDE_CHANGE', this._updateIndex)
   }
 
   public componentWillUnmount() {
-    TopicoEvents.off('VOLTAR_SLIDE', this._voltar)
-    TopicoEvents.off('AVANCAR_SLIDE', this._avancar)
-    TopicoEvents.off('SLIDE_CHANGE', this._updateIndex)
+    TopicosEvents.off('VOLTAR_SLIDE', this._voltar)
+    TopicosEvents.off('AVANCAR_SLIDE', this._avancar)
+    TopicosEvents.off('SLIDE_CHANGE', this._updateIndex)
   }
 
   public render() {
@@ -51,7 +51,7 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
     const slideIndex = this.state.slideIndex - 1
 
     if (this.state.slideIndex <= 0) {
-      TopicoEvents.emit('VOLTAR_TOPICO')
+      TopicosEvents.emit('VOLTAR_TOPICO')
       return
     }
 
@@ -62,7 +62,7 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
     const slideIndex = this.state.slideIndex + 1
 
     if (this.state.slideIndex + 1 >= this.state.slides.length) {
-      TopicoEvents.emit('AVANCAR_TOPICO')
+      TopicosEvents.emit('AVANCAR_TOPICO')
       return
     }
 

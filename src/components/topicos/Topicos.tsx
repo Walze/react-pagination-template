@@ -3,8 +3,8 @@ import * as React from 'react'
 import { ReactJSXElement } from '../../types';
 
 import Topico from "./Topico"
+import { TopicosEvents } from './TopicosEvents';
 import TopicosStore from './TopicosStore';
-import { TopicoEvents } from '../Events';
 
 
 interface ITopicosProps {
@@ -20,19 +20,21 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
   public state: ITopicosState = {
     topicos: TopicosStore.setupTopicos(this.props.children as Topico[]),
-    topicoIndex: 0,
+    topicoIndex: TopicosStore.topicoIndex,
   }
 
   public componentWillMount() {
-    TopicoEvents.on('TOPICOS_CHANGE', this._setTopicos)
-    TopicoEvents.on('VOLTAR_TOPICO', this._voltar)
-    TopicoEvents.on('AVANCAR_TOPICO', this._avancar)
+    TopicosEvents.on('TOPICOS_CHANGE', this._setTopicos)
+    TopicosEvents.on('TOPICO_CHANGE', this._updateIndex)
+    TopicosEvents.on('VOLTAR_TOPICO', this._voltar)
+    TopicosEvents.on('AVANCAR_TOPICO', this._avancar)
   }
 
   public componentWillUnmount() {
-    TopicoEvents.off('TOPICOS_CHANGE', this._setTopicos)
-    TopicoEvents.off('VOLTAR_TOPICO', this._voltar)
-    TopicoEvents.off('AVANCAR_TOPICO', this._avancar)
+    TopicosEvents.off('TOPICOS_CHANGE', this._setTopicos)
+    TopicosEvents.off('TOPICO_CHANGE', this._updateIndex)
+    TopicosEvents.off('VOLTAR_TOPICO', this._voltar)
+    TopicosEvents.off('AVANCAR_TOPICO', this._avancar)
   }
 
   public render() {
@@ -44,17 +46,23 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
     )
   }
 
-  private _setTopicos = (topicos: Topico[]) => { this.setState({ topicos }) }
+  private _setTopicos = (topicos: Topico[]) => {
+    this.setState({ topicos })
+  }
+
+  private _updateIndex = (obj: any) => {
+    this.setState({ topicoIndex: obj.index })
+  }
 
   private _voltar = () => {
     if (this.state.topicoIndex <= 0) return
 
-    this.setState({ topicoIndex: this.state.topicoIndex - 1 })
+    TopicosStore.topicoIndex = this.state.topicoIndex - 1
   }
 
   private _avancar = () => {
     if (this.state.topicoIndex + 1 >= this.state.topicos.length) return
 
-    this.setState({ topicoIndex: this.state.topicoIndex + 1 })
+    TopicosStore.topicoIndex = this.state.topicoIndex + 1
   }
 }
