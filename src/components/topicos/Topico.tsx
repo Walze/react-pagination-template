@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Slide from './Slide'
 import { ReactJSXElement } from '../../types'
-import { TopicoEvents } from '../Events';
+import { TopicoEvents } from '../events';
 
 import TopicosStore from './TopicosStore';
 
