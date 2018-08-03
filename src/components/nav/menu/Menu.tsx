@@ -57,7 +57,8 @@ class Menu extends React.Component<{}, IMenuState> {
   }
 
   public render() {
-    const topicos = TopicosStore.nomes.map(nome => (<li>{nome}</li>))
+    const topicos = TopicosStore.nomes
+      .map((nome, i) => (<li key={i}>{nome}</li>))
 
     return (
 

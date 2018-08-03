@@ -6,8 +6,9 @@ import Topico from "./Topico"
 import TopicosStore from './TopicosStore';
 import { TopicoEvents } from '../Events';
 
+
 interface ITopicosProps {
-  children: Array<ReactJSXElement<Topico>> | ReactJSXElement<Topico>
+  children: Array<ReactJSXElement<Topico>>
 }
 
 interface ITopicosState {
@@ -18,26 +19,32 @@ interface ITopicosState {
 export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
   public state: ITopicosState = {
-    topicos: TopicosStore.setTopicos(this.props.children as Topico[]),
+    topicos: TopicosStore.setupTopicos(this.props.children as Topico[]),
     topicoIndex: 0,
   }
 
-  constructor(props: any) {
-    super(props)
+  public componentWillMount() {
+    TopicoEvents.on('TOPICOS_CHANGE', this._setTopicos)
+    TopicoEvents.on('VOLTAR_TOPICO', () => this._voltar())
+    TopicoEvents.on('AVANCAR_TOPICO', () => this._avancar())
+  }
 
-    TopicoEvents.on('TOPICOS_CHANGE', topicos => {
-      this.setState({ topicos })
-    })
+  public componentWillUnmount() {
+    TopicoEvents.off('TOPICOS_CHANGE', this._setTopicos)
+    TopicoEvents.off('VOLTAR_TOPICO', () => this._voltar())
+    TopicoEvents.off('AVANCAR_TOPICO', () => this._avancar())
   }
 
   public render() {
     return (
       <div>
+        Topico: {this.state.topicoIndex}
         {this.state.topicos[this.state.topicoIndex]}
       </div>
     )
   }
 
+  private _setTopicos = (topicos: Topico[]) => { this.setState({ topicos }) }
 
   private _voltar() {
     if (this.state.topicoIndex <= 0) return

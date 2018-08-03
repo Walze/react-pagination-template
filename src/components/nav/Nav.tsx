@@ -1,11 +1,11 @@
 import * as React from 'react'
 import './nav.scss'
 import Menu from './menu/Menu';
-import { TopicoEvents } from '../Events'
 
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
 import TopicosStore from '../topicos/TopicosStore';
+import { TopicoEvents } from '../Events';
 
 // interface INavProps {}
 
@@ -23,7 +23,7 @@ class Nav extends React.Component<{}, INavState> {
     super(props)
 
     TopicoEvents.once('TOPICOS_CHANGE', () => this.setState({ activeTopico: TopicosStore.default }))
-    TopicoEvents.addListener('TOPICO_CHANGE', topico => this.setState({ activeTopico: topico }))
+    TopicoEvents.on('TOPICO_CHANGE', topico => this.setState({ activeTopico: topico }))
   }
 
   public voltar() {

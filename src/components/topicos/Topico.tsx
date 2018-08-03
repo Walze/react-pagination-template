@@ -1,6 +1,9 @@
 import * as React from 'react'
 import Slide from './Slide'
 import { ReactJSXElement } from '../../types'
+import { TopicoEvents } from '../Events';
+
+import TopicosStore from './TopicosStore';
 
 export interface ITopicoProps {
   nome: string,
@@ -16,27 +19,50 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
   public state = {
     slideIndex: 0,
-    slides: this.props.children as Slide[]
+    slides: TopicosStore.getSlides(this.props.nome)
+  }
+
+  public componentWillMount() {
+    TopicoEvents.on('VOLTAR_SLIDE', () => this._voltar())
+    TopicoEvents.on('AVANCAR_SLIDE', () => this._avancar())
+  }
+
+  public componentWillUnmount() {
+    TopicoEvents.off('VOLTAR_SLIDE', () => this._voltar())
+    TopicoEvents.off('AVANCAR_SLIDE', () => this._avancar())
   }
 
   public render() {
     return (
-      <div>{this.state.slides[this.state.slideIndex]}</div>
+      <div>
+        Slide: {this.state.slideIndex}
+        {this.state.slides[this.state.slideIndex]}
+      </div>
     )
   }
 
   private _voltar() {
-    if (this.state.slideIndex <= 0)
-      return
+    let slideIndex = this.state.slideIndex - 1
 
-    this.setState({ slideIndex: this.state.slideIndex - 1 })
+    if (this.state.slideIndex <= 0) {
+      TopicoEvents.emit('VOLTAR_TOPICO')
+      slideIndex = this.state.slides.length - 1
+    }
+
+    console.log(this.state.slideIndex, this.props.nome)
+
+    this.setState({ slideIndex })
   }
 
   private _avancar() {
-    if (this.state.slideIndex + 1 >= this.state.slides.length)
-      return
+    let slideIndex = this.state.slideIndex + 1
 
-    this.setState({ slideIndex: this.state.slideIndex + 1 })
+    if (this.state.slideIndex + 1 >= this.state.slides.length) {
+      TopicoEvents.emit('AVANCAR_TOPICO')
+      slideIndex = 0
+    }
+
+    this.setState({ slideIndex })
   }
 }
 
