@@ -22,7 +22,8 @@ type TopicoEvents =
     'AVANCAR_TOPICO' |
     'VOLTAR_TOPICO' |
     'TOPICOS_CHANGE' |
-    'TOPICO_CHANGE'
+    'TOPICO_CHANGE' |
+    'SLIDE_CHANGE'
 
 
 export const TopicoEvents = new EventHandler<TopicoEvents>()

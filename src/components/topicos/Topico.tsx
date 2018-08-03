@@ -18,18 +18,20 @@ export interface ITopicoState {
 class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
   public state = {
-    slideIndex: 0,
-    slides: TopicosStore.getSlides(this.props.nome)
+    slideIndex: TopicosStore.getTopico(this.props.nome).slideIndex,
+    slides: TopicosStore.getTopico(this.props.nome).slides
   }
 
   public componentWillMount() {
-    TopicoEvents.on('VOLTAR_SLIDE', () => this._voltar())
-    TopicoEvents.on('AVANCAR_SLIDE', () => this._avancar())
+    TopicoEvents.on('VOLTAR_SLIDE', this._voltar)
+    TopicoEvents.on('AVANCAR_SLIDE', this._avancar)
+    TopicoEvents.on('SLIDE_CHANGE', this._updateIndex)
   }
 
   public componentWillUnmount() {
-    TopicoEvents.off('VOLTAR_SLIDE', () => this._voltar())
-    TopicoEvents.off('AVANCAR_SLIDE', () => this._avancar())
+    TopicoEvents.off('VOLTAR_SLIDE', this._voltar)
+    TopicoEvents.off('AVANCAR_SLIDE', this._avancar)
+    TopicoEvents.off('SLIDE_CHANGE', this._updateIndex)
   }
 
   public render() {
@@ -41,28 +43,30 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
     )
   }
 
-  private _voltar() {
-    let slideIndex = this.state.slideIndex - 1
+  private _updateIndex = (i: number) => {
+    this.setState({ slideIndex: i })
+  }
+
+  private _voltar = () => {
+    const slideIndex = this.state.slideIndex - 1
 
     if (this.state.slideIndex <= 0) {
       TopicoEvents.emit('VOLTAR_TOPICO')
-      slideIndex = this.state.slides.length - 1
+      return
     }
 
-    console.log(this.state.slideIndex, this.props.nome)
-
-    this.setState({ slideIndex })
+    TopicosStore.setSlideIndex(this.props.nome, slideIndex)
   }
 
-  private _avancar() {
-    let slideIndex = this.state.slideIndex + 1
+  private _avancar = () => {
+    const slideIndex = this.state.slideIndex + 1
 
     if (this.state.slideIndex + 1 >= this.state.slides.length) {
       TopicoEvents.emit('AVANCAR_TOPICO')
-      slideIndex = 0
+      return
     }
 
-    this.setState({ slideIndex })
+    TopicosStore.setSlideIndex(this.props.nome, slideIndex)
   }
 }
 

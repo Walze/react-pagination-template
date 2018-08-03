@@ -25,14 +25,14 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
   public componentWillMount() {
     TopicoEvents.on('TOPICOS_CHANGE', this._setTopicos)
-    TopicoEvents.on('VOLTAR_TOPICO', () => this._voltar())
-    TopicoEvents.on('AVANCAR_TOPICO', () => this._avancar())
+    TopicoEvents.on('VOLTAR_TOPICO', this._voltar)
+    TopicoEvents.on('AVANCAR_TOPICO', this._avancar)
   }
 
   public componentWillUnmount() {
     TopicoEvents.off('TOPICOS_CHANGE', this._setTopicos)
-    TopicoEvents.off('VOLTAR_TOPICO', () => this._voltar())
-    TopicoEvents.off('AVANCAR_TOPICO', () => this._avancar())
+    TopicoEvents.off('VOLTAR_TOPICO', this._voltar)
+    TopicoEvents.off('AVANCAR_TOPICO', this._avancar)
   }
 
   public render() {
@@ -46,13 +46,13 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
   private _setTopicos = (topicos: Topico[]) => { this.setState({ topicos }) }
 
-  private _voltar() {
+  private _voltar = () => {
     if (this.state.topicoIndex <= 0) return
 
     this.setState({ topicoIndex: this.state.topicoIndex - 1 })
   }
 
-  private _avancar() {
+  private _avancar = () => {
     if (this.state.topicoIndex + 1 >= this.state.topicos.length) return
 
     this.setState({ topicoIndex: this.state.topicoIndex + 1 })
