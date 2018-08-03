@@ -4,7 +4,7 @@ import { ReactJSXElement } from '../../types';
 
 import Topico from "./Topico"
 import TopicosStore from './TopicosStore';
-import { topicoEvents } from '../events';
+import { TopicoEvents } from '../Events';
 
 interface ITopicosProps {
   children: Array<ReactJSXElement<Topico>> | ReactJSXElement<Topico>
@@ -25,7 +25,7 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
   constructor(props: any) {
     super(props)
 
-    topicoEvents.on('changes', topicos => {
+    TopicoEvents.on('TOPICOS_CHANGE', topicos => {
       this.setState({ topicos })
     })
   }

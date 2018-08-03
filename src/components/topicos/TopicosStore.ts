@@ -1,5 +1,5 @@
 import Topico from "./Topico";
-import { topicoEvents } from "../events";
+import { TopicoEvents } from "../Events";
 
 export default class TopicosStore {
 
@@ -10,7 +10,7 @@ export default class TopicosStore {
     public static setTopicos(array: Topico[]) {
         this._topicos = array
 
-        topicoEvents.emit('changes', this._topicos)
+        TopicoEvents.emit('TOPICOS_CHANGE', this._topicos)
         return this._topicos
     }
 

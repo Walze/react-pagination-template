@@ -2,11 +2,10 @@ import * as React from 'react'
 
 import './main.scss'
 import Nav from './nav/Nav'
-import Slide1 from './slides/Slide1';
-import Topico from './topicos/Topico';
-import Slide2 from './slides/Slide2';
-import { Topicos } from './topicos/Topicos';
-import { ReactJSXElement } from '../types';
+import Slide1 from './slides/Slide1'
+import Topico from './topicos/Topico'
+import Slide2 from './slides/Slide2'
+import { Topicos } from './topicos/Topicos'
 
 // interface IMainState { }
 
@@ -19,7 +18,6 @@ class Main extends React.Component<{}, {}> {
 
       <div>
 
-        {/* this.topicos undefined */}
         <Nav />
 
         <div className="container">

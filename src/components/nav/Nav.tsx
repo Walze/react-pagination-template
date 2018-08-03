@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './nav.scss'
 import Menu from './menu/Menu';
-import { topicoEvents } from '../events'
+import { TopicoEvents } from '../Events'
 
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
@@ -14,7 +14,7 @@ interface INavState { activeTopico: string }
 class Nav extends React.Component<{}, INavState> {
 
   public state = {
-    activeTopico: TopicosStore.default,
+    activeTopico: '',
   }
 
   public menu: Menu
@@ -22,20 +22,16 @@ class Nav extends React.Component<{}, INavState> {
   constructor(props: any) {
     super(props)
 
-    topicoEvents.once('changes', () => this.setState({ activeTopico: TopicosStore.default }))
-    topicoEvents.addListener('TOPICO_CHANGE', topico => this.setState({ activeTopico: topico }))
-  }
-
-  public componentDidMount() {
-    console.log(this)
+    TopicoEvents.once('TOPICOS_CHANGE', () => this.setState({ activeTopico: TopicosStore.default }))
+    TopicoEvents.addListener('TOPICO_CHANGE', topico => this.setState({ activeTopico: topico }))
   }
 
   public voltar() {
-    topicoEvents.emit('voltar')
+    TopicoEvents.emit('VOLTAR_SLIDE')
   }
 
   public avancar() {
-    topicoEvents.emit('avancar')
+    TopicoEvents.emit('AVANCAR_SLIDE')
   }
 
   public menuClick = () => {
