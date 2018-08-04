@@ -24,14 +24,14 @@ class Main extends React.Component<{}, {}> {
           <h1>lorem</h1>
 
           <Topicos>
-            <Topico key='0' nome='CAT1'>
+            <Topico index={0} nome='CAT1'>
 
               <Slide1 />
               <Slide2 />
 
             </Topico>
 
-            <Topico key='1' nome='CAT2'>
+            <Topico index={1} nome='CAT2'>
 
               <Slide1 />
               <Slide2 />

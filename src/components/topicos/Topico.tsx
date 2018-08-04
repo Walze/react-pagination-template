@@ -6,7 +6,8 @@ import { TopicosEvents } from './TopicosEvents';
 import TopicosStore from './TopicosStore';
 
 export interface ITopicoProps {
-  nome: string,
+  nome: string
+  index: number
   children: Array<ReactJSXElement<Slide>> | ReactJSXElement<Slide>
 }
 
@@ -55,7 +56,10 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
       return
     }
 
-    TopicosStore.setSlideIndex(this.props.nome, slideIndex)
+    TopicosStore.setSlideIndex(
+      TopicosStore.getTopico(this.props.nome),
+      slideIndex
+    )
   }
 
   private _avancar = () => {
@@ -66,7 +70,10 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
       return
     }
 
-    TopicosStore.setSlideIndex(this.props.nome, slideIndex)
+    TopicosStore.setSlideIndex(
+      TopicosStore.getTopico(this.props.nome),
+      slideIndex
+    )
   }
 }
 

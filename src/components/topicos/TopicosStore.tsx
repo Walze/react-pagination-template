@@ -11,8 +11,7 @@ interface ITopicoStoreItem {
 
 export default class TopicosStore {
 
-    public static setSlideIndex(topicoNome: string, i: number) {
-        const topico = this.getTopico(topicoNome)
+    public static setSlideIndex(topico: ITopicoStoreItem, i: number) {
         topico.slideIndex = i
 
         TopicosEvents.emit('SLIDE_CHANGE', topico.slideIndex)
@@ -33,8 +32,15 @@ export default class TopicosStore {
 
     public static getTopico(nome: string) {
         const found = this._topicos.find(top => top.el.props.nome === nome)
+
         if (!found) throw new Error('Unknown Topico')
         return found
+    }
+
+    public static skipToTopico(nome: string) {
+        const top = this.getTopico(nome)
+        this.topicoIndex = top.el.props.index
+        this.setSlideIndex(top, 0)
     }
 
     public static getTopicos() {

@@ -4,6 +4,7 @@ import { loopDelay, getTransitionDelay } from '../../../helpers/animation';
 
 import menu from '../../../img/menu.svg'
 import TopicosStore from '../../topicos/TopicosStore';
+import { TopicosEvents } from '../../topicos/TopicosEvents';
 
 // interface IMenuProps {}
 
@@ -57,8 +58,6 @@ class Menu extends React.Component<{}, IMenuState> {
   }
 
   public render() {
-    const topicos = TopicosStore.nomes
-      .map((nome, i) => (<li key={i}>{nome}</li>))
 
     return (
 
@@ -66,7 +65,11 @@ class Menu extends React.Component<{}, IMenuState> {
 
         <div hidden={this.state.hidden} className='open'>
           <ul ref={ref => this.openUL = ref!}>
-            {topicos}
+            {TopicosStore.nomes.map((nome, i) =>
+              (
+                <li onClick={this._topicoClick(nome)} key={i}>{nome}</li>
+              )
+            )}
           </ul>
         </div>
 
@@ -79,6 +82,11 @@ class Menu extends React.Component<{}, IMenuState> {
     )
   }
 
+  private _topicoClick(nome: string) {
+    return () => {
+      TopicosStore.skipToTopico(nome)
+    }
+  }
 }
 
 export default Menu
