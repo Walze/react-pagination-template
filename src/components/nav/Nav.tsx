@@ -1,36 +1,39 @@
 import * as React from 'react'
 import './nav.scss'
 import Menu from './menu/Menu';
-import { sliderEvents } from '../events';
 
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
+import TopicosStore from '../topicos/TopicosStore';
+import { TopicosEvents } from '../topicos/TopicosEvents';
 
-interface INavProps { initialTopico: string }
+// interface INavProps {}
+
 interface INavState { activeTopico: string }
 
-class Nav extends React.Component<INavProps, INavState> {
+class Nav extends React.Component<{}, INavState> {
 
   public state = {
-    activeTopico: this.props.initialTopico,
+    activeTopico: '',
   }
 
   public menu: Menu
 
-  constructor(props: any) {
-    super(props)
+  public componentWillMount() {
+    TopicosEvents.once('TOPICOS_CHANGE', this._updateTopicos)
+    TopicosEvents.on('TOPICO_CHANGE', this._updateTopico)
+  }
 
-    sliderEvents.addListener('TOPICO_CHANGE', nome => {
-      this.setState({ activeTopico: nome })
-    })
+  public componentWillUnmount() {
+    TopicosEvents.off('TOPICO_CHANGE', this._updateTopico)
   }
 
   public voltar() {
-    sliderEvents.emit('voltar')
+    TopicosEvents.emit('VOLTAR_SLIDE')
   }
 
   public avancar() {
-    sliderEvents.emit('avancar')
+    TopicosEvents.emit('AVANCAR_SLIDE')
   }
 
   public menuClick = () => {
@@ -42,9 +45,9 @@ class Nav extends React.Component<INavProps, INavState> {
 
       <div className='nav'>
 
-        <div className="col webaula hide-phone">
-          <span className='webaula'>Webaula XXXX</span>
-          <span className='unidade'>{this.state.activeTopico}</span>
+        <div className="col info hide-phone">
+          <span className='title'>Webaula XXXX</span>
+          <span className='sub-title'>{this.state.activeTopico}</span>
         </div>
 
         <div className='col seta' onClick={this.voltar}>
@@ -64,6 +67,12 @@ class Nav extends React.Component<INavProps, INavState> {
 
     )
   }
+
+  private _updateTopico = (obj: any) =>
+    this.setState({ activeTopico: obj.nome })
+
+  private _updateTopicos = () =>
+    this.setState({ activeTopico: TopicosStore.default })
 
 }
 
