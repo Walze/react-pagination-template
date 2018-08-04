@@ -6,6 +6,7 @@ import Slide1 from './slides/Slide1'
 import Topico from './topicos/Topico'
 import Slide2 from './slides/Slide2'
 import { Topicos } from './topicos/Topicos'
+import Slide3 from './slides/Slide3';
 
 // interface IMainState { }
 
@@ -28,13 +29,15 @@ class Main extends React.Component<{}, {}> {
 
               <Slide1 />
               <Slide2 />
+              <Slide3 />
 
             </Topico>
 
             <Topico key='1' nome='CAT2'>
 
-              <Slide1 />
               <Slide2 />
+              <Slide3 />
+              <Slide1 />
 
             </Topico>
           </Topicos>

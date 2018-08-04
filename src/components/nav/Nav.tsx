@@ -46,7 +46,7 @@ class Nav extends React.Component<{}, INavState> {
       <div className='nav'>
 
         <div className="col info hide-phone">
-          <span className='title'>Webaula XXXX</span>
+          <span className='title'>Title XXXX</span>
           <span className='sub-title'>{this.state.activeTopico}</span>
         </div>
 
