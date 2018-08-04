@@ -45,9 +45,9 @@ class Nav extends React.Component<{}, INavState> {
 
       <div className='nav'>
 
-        <div className="col webaula hide-phone">
-          <span className='webaula'>Webaula XXXX</span>
-          <span className='unidade'>{this.state.activeTopico}</span>
+        <div className="col info hide-phone">
+          <span className='title'>Webaula XXXX</span>
+          <span className='sub-title'>{this.state.activeTopico}</span>
         </div>
 
         <div className='col seta' onClick={this.voltar}>
