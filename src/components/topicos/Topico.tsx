@@ -7,7 +7,7 @@ import TopicosStore from './TopicosStore';
 
 export interface ITopicoProps {
   nome: string
-  index: number
+  key: string
   children: Array<ReactJSXElement<Slide>> | ReactJSXElement<Slide>
 }
 

@@ -4,12 +4,15 @@ import { TopicosEvents } from './TopicosEvents';
 import Slide from "./Slide";
 
 interface ITopicoStoreItem {
+    index: number
     slideIndex: number
     el: Topico
     slides: Slide[]
 }
 
 export default class TopicosStore {
+
+    public static topicosLength = 0
 
     public static setSlideIndex(topico: ITopicoStoreItem, i: number) {
         topico.slideIndex = i
@@ -19,7 +22,10 @@ export default class TopicosStore {
 
     public static setupTopicos(array: Topico[]) {
         this._topicos = array.map(el => {
+            this.topicosLength++
+
             return {
+                index: this.topicosLength - 1,
                 el,
                 slideIndex: 0,
                 slides: el.props.children as Slide[]
@@ -39,7 +45,7 @@ export default class TopicosStore {
 
     public static skipToTopico(nome: string) {
         const top = this.getTopico(nome)
-        this.topicoIndex = top.el.props.index
+        this.topicoIndex = top.index
         this.setSlideIndex(top, 0)
     }
 
