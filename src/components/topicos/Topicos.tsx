@@ -20,7 +20,7 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
 
   public state: ITopicosState = {
     topicos: TopicosStore.setupTopicos(this.props.children as Topico[]),
-    topicoIndex: TopicosStore.topicoIndex,
+    topicoIndex: TopicosStore.activeTopicoIndex,
   }
 
   public componentWillMount() {
@@ -58,16 +58,15 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
     if (this.state.topicoIndex <= 0) return
 
     const index = this.state.topicoIndex - 1
+    TopicosStore.activeTopicoIndex = index
+
     const topico = TopicosStore.topicos[index]
-
-    TopicosStore.topicoIndex = index
-
-    TopicosStore.setSlideIndex(topico, topico.slides.length - 1)
+    topico.setSlideIndex(topico.slides.length - 1)
   }
 
   private _avancar = () => {
     if (this.state.topicoIndex + 1 >= this.state.topicos.length) return
 
-    TopicosStore.topicoIndex = this.state.topicoIndex + 1
+    TopicosStore.activeTopicoIndex = this.state.topicoIndex + 1
   }
 }

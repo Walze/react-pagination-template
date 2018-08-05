@@ -3,7 +3,7 @@ import { TopicosEvents } from './TopicosEvents';
 
 import Slide from "./Slide";
 
-interface ITopicoStoreItem {
+interface ITopicoStoreItemConstructor {
     nome: string
     index: number
     slideIndex: number
@@ -11,34 +11,50 @@ interface ITopicoStoreItem {
     slides: Slide[]
 }
 
-export default class TopicosStore {
+class TopicoStoreItem {
+    public nome: string
+    public index: number
+    public slideIndex: number
+    public el: Topico
+    public slides: Slide[]
 
-    public static setSlideIndex(topico: ITopicoStoreItem, i: number) {
-        topico.slideIndex = i
-
-        TopicosEvents.emit('SLIDE_CHANGE', topico.slideIndex)
+    constructor(obj: ITopicoStoreItemConstructor) {
+        this.nome = obj.nome
+        this.index = obj.index
+        this.slideIndex = obj.slideIndex
+        this.el = obj.el
+        this.slides = obj.slides
     }
+
+    public setSlideIndex(i: number) {
+        this.slideIndex = i
+
+        TopicosEvents.emit('SLIDE_CHANGE', this.slideIndex)
+    }
+}
+
+export default class TopicosStore {
 
     public static setupTopicos(newTopicos: Topico[]) {
         newTopicos.map(el => {
 
-            const newTopico: ITopicoStoreItem = {
+            const newTopico = new TopicoStoreItem({
                 nome: el.props.nome,
-                index: this._topicos.length,
+                index: this.topicos.length,
                 el,
                 slideIndex: 0,
                 slides: el.props.children as Slide[]
-            }
+            })
 
-            this._topicos.push(newTopico)
+            this.topicos.push(newTopico)
         })
 
-        TopicosEvents.emit('TOPICOS_CHANGE', this._topicos)
-        return this._topicos.map(top => top.el)
+        TopicosEvents.emit('TOPICOS_CHANGE', this.topicos)
+        return this.topicos.map(top => top.el)
     }
 
     public static getTopicoByNome(nome: string) {
-        const found = this._topicos.find(top => top.nome === nome)
+        const found = this.topicos.find(top => top.nome === nome)
 
         if (!found) throw new Error('Unknown Topico')
         return found
@@ -46,8 +62,8 @@ export default class TopicosStore {
 
     public static skipToTopico(nome: string) {
         const top = this.getTopicoByNome(nome)
-        this.topicoIndex = top.index
-        this.setSlideIndex(top, 0)
+        this.activeTopicoIndex = top.index
+        top.setSlideIndex(0)
     }
 
     public static get topicos() {
@@ -55,22 +71,22 @@ export default class TopicosStore {
     }
 
     public static get nomes() {
-        return this._topicos.map(top => top.nome)
+        return this.topicos.map(top => top.nome)
     }
 
-    public static get topicoIndex() {
-        return this._topicoIndex
+    public static get activeTopicoIndex() {
+        return this._activeTopicoIndex
     }
 
-    public static set topicoIndex(i: number) {
-        this._topicoIndex = i
+    public static set activeTopicoIndex(i: number) {
+        this._activeTopicoIndex = i
 
         TopicosEvents.emit('TOPICO_CHANGE', {
-            index: this.topicoIndex,
-            nome: this._topicos[this.topicoIndex].nome
+            index: this.activeTopicoIndex,
+            nome: this.topicos[this.activeTopicoIndex].nome
         })
     }
 
-    private static _topicoIndex: number = 0
-    private static _topicos: ITopicoStoreItem[] = []
+    private static _activeTopicoIndex: number = 0
+    private static _topicos: TopicoStoreItem[] = []
 }

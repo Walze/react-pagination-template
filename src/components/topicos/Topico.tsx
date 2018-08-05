@@ -49,31 +49,29 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
   }
 
   private _voltar = () => {
-    const slideIndex = this.state.slideIndex - 1
+    const prevSlide = this.state.slideIndex - 1
 
-    if (this.state.slideIndex <= 0) {
+    if (prevSlide < 0) {
       TopicosEvents.emit('VOLTAR_TOPICO')
       return
     }
 
-    TopicosStore.setSlideIndex(
-      TopicosStore.getTopicoByNome(this.props.nome),
-      slideIndex
-    )
+    TopicosStore
+      .getTopicoByNome(this.props.nome)
+      .setSlideIndex(prevSlide)
   }
 
   private _avancar = () => {
-    const slideIndex = this.state.slideIndex + 1
+    const nextSlide = this.state.slideIndex + 1
 
-    if (this.state.slideIndex + 1 >= this.state.slides.length) {
+    if (nextSlide >= this.state.slides.length) {
       TopicosEvents.emit('AVANCAR_TOPICO')
       return
     }
 
-    TopicosStore.setSlideIndex(
-      TopicosStore.getTopicoByNome(this.props.nome),
-      slideIndex
-    )
+    TopicosStore
+      .getTopicoByNome(this.props.nome)
+      .setSlideIndex(nextSlide)
   }
 }
 
