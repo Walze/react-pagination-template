@@ -72,7 +72,7 @@ class Nav extends React.Component<{}, INavState> {
     this.setState({ activeTopico: obj.nome })
 
   private _updateTopicos = () =>
-    this.setState({ activeTopico: TopicosStore.default })
+    this.setState({ activeTopico: TopicosStore.topicos[0].nome })
 
 }
 

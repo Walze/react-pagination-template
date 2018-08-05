@@ -4,6 +4,7 @@ import { TopicosEvents } from './TopicosEvents';
 import Slide from "./Slide";
 
 interface ITopicoStoreItem {
+    nome: string
     index: number
     slideIndex: number
     el: Topico
@@ -12,67 +13,61 @@ interface ITopicoStoreItem {
 
 export default class TopicosStore {
 
-    public static topicosLength = 0
-
     public static setSlideIndex(topico: ITopicoStoreItem, i: number) {
         topico.slideIndex = i
 
         TopicosEvents.emit('SLIDE_CHANGE', topico.slideIndex)
     }
 
-    public static setupTopicos(array: Topico[]) {
-        this._topicos = array.map(el => {
-            this.topicosLength++
+    public static setupTopicos(newTopicos: Topico[]) {
+        newTopicos.map(el => {
 
-            return {
-                index: this.topicosLength - 1,
+            const newTopico: ITopicoStoreItem = {
+                nome: el.props.nome,
+                index: this._topicos.length,
                 el,
                 slideIndex: 0,
                 slides: el.props.children as Slide[]
             }
+
+            this._topicos.push(newTopico)
         })
 
         TopicosEvents.emit('TOPICOS_CHANGE', this._topicos)
         return this._topicos.map(top => top.el)
     }
 
-    public static getTopico(nome: string) {
-        const found = this._topicos.find(top => top.el.props.nome === nome)
+    public static getTopicoByNome(nome: string) {
+        const found = this._topicos.find(top => top.nome === nome)
 
         if (!found) throw new Error('Unknown Topico')
         return found
     }
 
     public static skipToTopico(nome: string) {
-        const top = this.getTopico(nome)
+        const top = this.getTopicoByNome(nome)
         this.topicoIndex = top.index
         this.setSlideIndex(top, 0)
     }
 
-    public static getTopicos() {
+    public static get topicos() {
         return this._topicos
     }
 
-    static get nomes() {
-        return this._topicos.map(top => top.el.props.nome)
+    public static get nomes() {
+        return this._topicos.map(top => top.nome)
     }
 
-    static get default() {
-        if (!this._topicos.length) return 'empty'
-
-        return this._topicos[0].el.props.nome
-    }
-
-    static get topicoIndex() {
+    public static get topicoIndex() {
         return this._topicoIndex
     }
 
-    static set topicoIndex(i: number) {
+    public static set topicoIndex(i: number) {
         this._topicoIndex = i
 
         TopicosEvents.emit('TOPICO_CHANGE', {
             index: this.topicoIndex,
-            nome: this._topicos[this.topicoIndex].el.props.nome
+            nome: this._topicos[this.topicoIndex].nome
         })
     }
 

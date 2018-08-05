@@ -25,7 +25,7 @@ class Main extends React.Component<{}, {}> {
           <h1>lorem</h1>
 
           <Topicos>
-            <Topico key='0' nome='CAT1'>
+            <Topico key='0' nome='Topico #1'>
 
               <Slide1 />
               <Slide2 />
@@ -33,7 +33,7 @@ class Main extends React.Component<{}, {}> {
 
             </Topico>
 
-            <Topico key='1' nome='CAT2'>
+            <Topico key='1' nome='Topico #2'>
 
               <Slide2 />
               <Slide3 />

@@ -40,7 +40,7 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
   public render() {
     return (
       <div>
-        Topico: {this.state.topicoIndex}
+        Topico: {this.state.topicoIndex + 1}
         {this.state.topicos[this.state.topicoIndex]}
       </div>
     )
@@ -57,7 +57,12 @@ export class Topicos extends React.Component<ITopicosProps, ITopicosState> {
   private _voltar = () => {
     if (this.state.topicoIndex <= 0) return
 
-    TopicosStore.topicoIndex = this.state.topicoIndex - 1
+    const index = this.state.topicoIndex - 1
+    const topico = TopicosStore.topicos[index]
+
+    TopicosStore.topicoIndex = index
+
+    TopicosStore.setSlideIndex(topico, topico.slides.length - 1)
   }
 
   private _avancar = () => {

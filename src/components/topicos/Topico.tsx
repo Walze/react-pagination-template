@@ -19,8 +19,8 @@ export interface ITopicoState {
 class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
   public state = {
-    slideIndex: TopicosStore.getTopico(this.props.nome).slideIndex,
-    slides: TopicosStore.getTopico(this.props.nome).slides
+    slideIndex: TopicosStore.getTopicoByNome(this.props.nome).slideIndex,
+    slides: TopicosStore.getTopicoByNome(this.props.nome).slides
   }
 
   public componentWillMount() {
@@ -38,7 +38,7 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
   public render() {
     return (
       <div>
-        Slide: {this.state.slideIndex}
+        Slide: {this.state.slideIndex + 1}
         {this.state.slides[this.state.slideIndex]}
       </div>
     )
@@ -57,7 +57,7 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
     }
 
     TopicosStore.setSlideIndex(
-      TopicosStore.getTopico(this.props.nome),
+      TopicosStore.getTopicoByNome(this.props.nome),
       slideIndex
     )
   }
@@ -71,7 +71,7 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
     }
 
     TopicosStore.setSlideIndex(
-      TopicosStore.getTopico(this.props.nome),
+      TopicosStore.getTopicoByNome(this.props.nome),
       slideIndex
     )
   }
