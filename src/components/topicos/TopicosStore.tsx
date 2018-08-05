@@ -50,7 +50,8 @@ export default class TopicosStore {
         })
 
         TopicosEvents.emit('TOPICOS_CHANGE', this.topicos)
-        return this.topicos.map(top => top.el)
+
+        return newTopicos
     }
 
     public static getTopicoByNome(nome: string) {
