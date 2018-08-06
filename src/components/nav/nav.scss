@@ -1,3 +1,8 @@
+@media (max-width: 500px) {
+  div.nav {
+    height: 50px;
+  }
+}
 .nav {
   z-index: 2;
   position: fixed;
@@ -5,7 +10,7 @@
   background: #222;
   width: 100%;
   display: flex;
-  height: 75px;
+  height: 65px;
   .col {
     cursor: pointer;
     transition: all .2s linear;
@@ -23,14 +28,17 @@
     &.info {
       .title {
         font-size: 1.3rem;
-        margin-bottom: .2rem;
+      }
+      .sub-title {
+        font-size: 1rem;
       }
       flex-direction: column;
     }
     &.seta {
       text-transform: uppercase;
+      font-size: .9rem;
       img {
-        width: 50px;
+        width: 40px;
       }
     }
   }

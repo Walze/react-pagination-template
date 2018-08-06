@@ -47,7 +47,11 @@ class Nav extends React.Component<{}, INavState> {
 
         <div className="col info hide-phone">
           <span className='title'>Title XXXX</span>
-          <span className='sub-title'>{this.state.activeTopico}</span>
+          <span className='sub-title'>
+            <i>
+              {this.state.activeTopico}
+            </i>
+          </span>
         </div>
 
         <div className='col seta' onClick={this.voltar}>
