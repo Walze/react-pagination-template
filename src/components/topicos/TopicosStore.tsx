@@ -1,25 +1,29 @@
 import Topico from "./Topico";
-import { TopicosEvents } from './TopicosEvents';
+import TopicosEvents from './TopicosEvents';
 
 import Slide from "./Slide";
+import { isArray } from "util";
 
 interface ITopicoStoreItemConstructor {
-    nome: string
+    titulo: string
+    subTitulo: string
     index: number
     slideIndex: number
     el: Topico
     slides: Slide[]
 }
 
-class TopicoStoreItem {
-    public nome: string
+class TopicoStoreItem implements ITopicoStoreItemConstructor {
+    public titulo: string
+    public subTitulo: string
     public index: number
     public slideIndex: number
     public el: Topico
     public slides: Slide[]
 
-    constructor(obj: ITopicoStoreItemConstructor) {
-        this.nome = obj.nome
+    public constructor(obj: ITopicoStoreItemConstructor) {
+        this.titulo = obj.titulo
+        this.subTitulo = obj.subTitulo
         this.index = obj.index
         this.slideIndex = obj.slideIndex
         this.el = obj.el
@@ -33,17 +37,31 @@ class TopicoStoreItem {
     }
 }
 
-export default class TopicosStore {
+export class TopicosStore {
 
-    public static setupTopicos(newTopicos: Topico[]) {
-        newTopicos.map(el => {
+    public static setupTopicos(newTopicos: Topico[] | Topico) {
+        let topicos: Topico[] = []
+
+        // make array of not array
+        if (isArray(newTopicos)) topicos = newTopicos
+        else topicos[0] = newTopicos
+
+        topicos.map(el => {
+            let slides: Slide[] = []
+
+            // make array of not array
+            if (isArray(el.props.children))
+                slides = el.props.children as Slide[]
+            else
+                slides[0] = el.props.children as Slide
 
             const newTopico = new TopicoStoreItem({
-                nome: el.props.nome,
+                titulo: el.props.titulo,
+                subTitulo: el.props.subTitulo ? el.props.subTitulo : '',
                 index: this.topicos.length,
                 el,
                 slideIndex: 0,
-                slides: el.props.children as Slide[]
+                slides
             })
 
             this.topicos.push(newTopico)
@@ -51,13 +69,14 @@ export default class TopicosStore {
 
         TopicosEvents.emit('TOPICOS_CHANGE', this.topicos)
 
-        return newTopicos
+        return topicos
     }
 
     public static getTopicoByNome(nome: string) {
-        const found = this.topicos.find(top => top.nome === nome)
+        const found = this.topicos.find(top => top.titulo === nome)
 
         if (!found) throw new Error('Unknown Topico')
+
         return found
     }
 
@@ -72,7 +91,7 @@ export default class TopicosStore {
     }
 
     public static get nomes() {
-        return this.topicos.map(top => top.nome)
+        return this.topicos.map(top => top.titulo)
     }
 
     public static get activeTopicoIndex() {
@@ -84,10 +103,13 @@ export default class TopicosStore {
 
         TopicosEvents.emit('TOPICO_CHANGE', {
             index: this.activeTopicoIndex,
-            nome: this.topicos[this.activeTopicoIndex].nome
+            titulo: this.topicos[this.activeTopicoIndex].titulo,
+            subTitulo: this.topicos[this.activeTopicoIndex].subTitulo,
         })
     }
 
-    private static _activeTopicoIndex: number = 0
+    private static _activeTopicoIndex = 0
     private static _topicos: TopicoStoreItem[] = []
 }
+
+export default TopicosStore

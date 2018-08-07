@@ -1,8 +1,9 @@
 import * as React from 'react'
 
-abstract class Slide extends React.Component {
+// tslint:disable-next-line:no-any
+abstract class Slide<P = {}, S = {}, SS = any> extends React.Component<P, S, SS> {
 
-  constructor(props: any) {
+  public constructor(props: P) {
     super(props)
   }
 }

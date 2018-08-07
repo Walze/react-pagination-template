@@ -1,12 +1,13 @@
 import * as React from 'react'
 
 import './main.scss'
-import Nav from './nav/Nav'
-import Slide1 from './slides/Slide1'
+import Topicos from './topicos/Topicos'
 import Topico from './topicos/Topico'
-import Slide2 from './slides/Slide2'
-import { Topicos } from './topicos/Topicos'
-import Slide3 from './slides/Slide3';
+
+import Nav from './nav/Nav'
+import Intro from './slides/Intro';
+import U1S1 from './slides/uni1/U1S1';
+import U1S2 from './slides/uni1/U1S2';
 
 // interface IMainState { }
 
@@ -14,6 +15,7 @@ class Main extends React.Component<{}, {}> {
 
   public topicos: Topicos
 
+  // tslint:disable-next-line:prefer-function-over-method
   public render() {
     return (
 
@@ -22,24 +24,23 @@ class Main extends React.Component<{}, {}> {
         <Nav />
 
         <div className="container">
-          <h1>lorem</h1>
+          <h1>Composição da Oferta</h1>
 
           <Topicos>
-            <Topico key='0' nome='Topico #1'>
-
-              <Slide1 />
-              <Slide2 />
-              <Slide3 />
-
+            <Topico key='0' titulo='Introdução'>
+              <Intro />
             </Topico>
 
-            <Topico key='1' nome='Topico #2'>
-
-              <Slide2 />
-              <Slide3 />
-              <Slide1 />
-
+            <Topico key='1' titulo='Unidade 1' subTitulo='Categoria'>
+              <U1S1 />
+              <U1S2 />
             </Topico>
+
+            <Topico key='2' titulo='Unidade 2' subTitulo='Título'>
+              <h1>teste</h1>
+              <h1>teste2</h1>
+            </Topico>
+
           </Topicos>
 
         </div>

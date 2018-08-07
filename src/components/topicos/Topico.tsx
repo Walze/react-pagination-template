@@ -1,12 +1,13 @@
 import * as React from 'react'
 import Slide from './Slide'
 import { ReactJSXElement } from '../../types'
-import { TopicosEvents } from './TopicosEvents';
+import TopicosEvents from './TopicosEvents';
 
 import TopicosStore from './TopicosStore';
 
 export interface ITopicoProps {
-  nome: string
+  titulo: string
+  subTitulo?: string
   key: string
   children: Array<ReactJSXElement<Slide>> | ReactJSXElement<Slide>
 }
@@ -19,8 +20,8 @@ export interface ITopicoState {
 class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
   public state = {
-    slideIndex: TopicosStore.getTopicoByNome(this.props.nome).slideIndex,
-    slides: TopicosStore.getTopicoByNome(this.props.nome).slides
+    slideIndex: TopicosStore.getTopicoByNome(this.props.titulo).slideIndex,
+    slides: TopicosStore.getTopicoByNome(this.props.titulo).slides
   }
 
   public componentWillMount() {
@@ -38,7 +39,6 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
   public render() {
     return (
       <div>
-        Slide: {this.state.slideIndex + 1}
         {this.state.slides[this.state.slideIndex]}
       </div>
     )
@@ -53,11 +53,12 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
     if (prevSlide < 0) {
       TopicosEvents.emit('VOLTAR_TOPICO')
+      
       return
     }
 
     TopicosStore
-      .getTopicoByNome(this.props.nome)
+      .getTopicoByNome(this.props.titulo)
       .setSlideIndex(prevSlide)
   }
 
@@ -66,11 +67,12 @@ class Topico extends React.Component<ITopicoProps, ITopicoState> {
 
     if (nextSlide >= this.state.slides.length) {
       TopicosEvents.emit('AVANCAR_TOPICO')
+      
       return
     }
 
     TopicosStore
-      .getTopicoByNome(this.props.nome)
+      .getTopicoByNome(this.props.titulo)
       .setSlideIndex(nextSlide)
   }
 }

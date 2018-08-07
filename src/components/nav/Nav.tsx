@@ -5,39 +5,60 @@ import Menu from './menu/Menu';
 import setaL from '../../img/seta1.svg'
 import setaR from '../../img/seta2.svg'
 import TopicosStore from '../topicos/TopicosStore';
-import { TopicosEvents } from '../topicos/TopicosEvents';
+import TopicosEvents from '../topicos/TopicosEvents';
+import { IndexSignature } from '../../types';
 
 // interface INavProps {}
 
-interface INavState { activeTopico: string }
+interface INavState {
+  activeTopico: {
+    titulo: string;
+    subTitulo: string;
+  }
+}
 
 class Nav extends React.Component<{}, INavState> {
 
   public state = {
-    activeTopico: '',
+    activeTopico: {
+      titulo: '',
+      subTitulo: '',
+    },
   }
 
-  public menu: Menu
+  public menu: Menu | null
 
   public componentWillMount() {
     TopicosEvents.once('TOPICOS_CHANGE', this._updateTopicos)
     TopicosEvents.on('TOPICO_CHANGE', this._updateTopico)
+    document.addEventListener('keyup', this.handleKey)
   }
 
   public componentWillUnmount() {
     TopicosEvents.off('TOPICO_CHANGE', this._updateTopico)
+    document.removeEventListener('keyup', this.handleKey)
   }
 
-  public voltar() {
+  public handleKey = (e: KeyboardEvent) => {
+    const key = e.key
+
+    if (key === 'ArrowLeft')
+      this.voltar()
+    if (key === 'ArrowRight')
+      this.avancar()
+  }
+
+  public voltar = () => {
     TopicosEvents.emit('VOLTAR_SLIDE')
   }
 
-  public avancar() {
+  public avancar = () => {
     TopicosEvents.emit('AVANCAR_SLIDE')
   }
 
   public menuClick = () => {
-    this.menu.menuClick()
+    if (this.menu)
+      this.menu.menuClick()
   }
 
   public render() {
@@ -46,11 +67,11 @@ class Nav extends React.Component<{}, INavState> {
       <div className='nav'>
 
         <div className="col info hide-phone">
-          <span className='title'>Title XXXX</span>
+          <span className='title'>
+            {this.state.activeTopico.titulo}
+          </span>
           <span className='sub-title'>
-            <i>
-              {this.state.activeTopico}
-            </i>
+            {this.state.activeTopico.subTitulo}
           </span>
         </div>
 
@@ -64,7 +85,7 @@ class Nav extends React.Component<{}, INavState> {
         </div>
 
         <div className="col" onClick={this.menuClick}>
-          <Menu ref={ref => this.menu = ref!} />
+          <Menu ref={ref => this.menu = ref} />
         </div>
 
       </div>
@@ -72,11 +93,21 @@ class Nav extends React.Component<{}, INavState> {
     )
   }
 
-  private _updateTopico = (obj: any) =>
-    this.setState({ activeTopico: obj.nome })
+  private _updateTopico = (obj: IndexSignature) =>
+    this.setState({
+      activeTopico: {
+        titulo: obj.titulo,
+        subTitulo: obj.subTitulo,
+      }
+    })
 
   private _updateTopicos = () =>
-    this.setState({ activeTopico: TopicosStore.topicos[0].nome })
+    this.setState({
+      activeTopico: {
+        titulo: TopicosStore.topicos[0].titulo,
+        subTitulo: TopicosStore.topicos[0].subTitulo,
+      }
+    })
 
 }
 
