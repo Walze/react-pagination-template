@@ -18,7 +18,6 @@
     align-items: center;
     .icone {
       border-radius: 5px;
-      padding: 0 7px;
       width: 40px;
     }
   }
@@ -40,6 +39,7 @@
         padding: 20px;
         border-color: #222;
         transform: translateX(100%);
+        text-transform: uppercase;
         &.active:hover {
           background: rgba($color: #444, $alpha: .333) !important;
           border: none;

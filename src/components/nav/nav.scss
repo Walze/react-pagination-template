@@ -30,13 +30,23 @@
     align-items: center;
     color: white;
     &.info {
+      flex-direction: column;
       .title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+      }
+      .line {
+        border-radius: 5px;
+        width: 50%;
+        height: 1px;
+        background: #fff;
+        margin: 1px 0;
+        margin-bottom: 2px;
       }
       .sub-title {
-        font-size: 1rem;
+        font-size: .8rem;
+        text-transform: uppercase;
       }
-      flex-direction: column;
     }
     &.seta {
       text-transform: uppercase;

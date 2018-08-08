@@ -70,6 +70,7 @@ class Nav extends React.Component<{}, INavState> {
           <span className='title'>
             {this.state.activeTopico.titulo}
           </span>
+          <div className="line" />
           <span className='sub-title'>
             {this.state.activeTopico.subTitulo}
           </span>
