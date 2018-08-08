@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import './main.scss'
+import '../styles/alternativas.scss'
 import Topicos from './topicos/Topicos'
 import Topico from './topicos/Topico'
 

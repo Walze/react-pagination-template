@@ -5,6 +5,9 @@
 }
 
 .nav {
+  * {
+    font-family: 'Crete Round';
+  }
   z-index: 2;
   position: fixed;
   bottom: 0;

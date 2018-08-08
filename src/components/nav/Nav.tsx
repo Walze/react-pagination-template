@@ -77,10 +77,10 @@ class Nav extends React.Component<{}, INavState> {
 
         <div className='col seta' onClick={this.voltar}>
           <img src={setaL} />
-          <span className='hide-phone'>voltar</span>
+          <span className='hide-phone crete'>voltar</span>
         </div>
         <div className='col seta' onClick={this.avancar}>
-          <span className='hide-phone'>avançar</span>
+          <span className='hide-phone crete'>avançar</span>
           <img src={setaR} />
         </div>
 

@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   position: relative;
+  box-sizing: border-box;
 }
 
 $font-size-1: 1.1rem;
@@ -12,6 +13,10 @@ body {
   width: 100%;
   height: 100%;
   font-size: $font-size-1;
+}
+
+.crete {
+  font-family: 'Crete Round';
 }
 
 img {
