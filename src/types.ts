@@ -5,3 +5,7 @@ export interface IndexSignature {
   // tslint:disable-next-line:no-any
   [key: string]: any
 }
+
+export interface IAsyncSetState {
+  waitSetState(state: {}): Promise<{}>
+}
