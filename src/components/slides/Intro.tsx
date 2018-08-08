@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Slide from "../topicos/Slide"
 
-class Intro extends Slide {
+class INTRO extends Slide {
 
   // tslint:disable-next-line:prefer-function-over-method
   public render() {
@@ -27,4 +27,4 @@ class Intro extends Slide {
   }
 }
 
-export default Intro
+export default INTRO

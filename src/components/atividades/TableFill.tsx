@@ -93,10 +93,14 @@ class TableFill
         Number(el.key) !== clickedI
       )
 
-      this.setState({
-        respostas: filtered,
-        currentPergunta: proxPergunta,
-      }, () => this.props.updateRespostas(this.state.respostas))
+      this.setState(
+        {
+          respostas: filtered,
+          currentPergunta: proxPergunta,
+        },
+        () => this.props.updateRespostas(this.state.respostas)
+      )
+
     } else {
       const pergunta = this.state.perguntas[this.state.currentPergunta]
       pergunta.innerHTML = 'Tente Novamente'

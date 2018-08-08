@@ -9,19 +9,19 @@ class U1S1 extends Slide {
     respostas: []
   }
 
-  public setRespostas = (resp: JSX.Element[]) => {
+  public updateRespostas = (resp: JSX.Element[]) => {
     this.setState({ respostas: resp })
   }
 
   // tslint:disable-next-line:prefer-function-over-method
   public render() {
     return (
-      <div>
-        <div className="respostas">
-          {this.state.respostas}
-        </div>
+      <TableFill updateRespostas={this.updateRespostas}>
+        <div>
+          <div className="respostas">
+            {this.state.respostas}
+          </div>
 
-        <TableFill updateRespostas={this.setRespostas}>
           <table className='perguntas centered'>
             <thead>
               <tr>
@@ -71,8 +71,9 @@ class U1S1 extends Slide {
 
             </tbody>
           </table>
-        </TableFill>
-      </div>
+        </div>
+
+      </TableFill>
     )
   }
 }
