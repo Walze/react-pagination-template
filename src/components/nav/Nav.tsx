@@ -54,19 +54,6 @@ class Nav extends React.Component<{}, INavState> {
       this.avancar()
   }
 
-  private _animate = async () => {
-    if (!this.line.current) return
-
-    const line = this.line.current
-    const time = getTransitionDelay(line)
-
-    line.classList.remove('active')
-
-    await wait(time)
-
-    line.classList.add('active')
-  }
-
   public voltar = () => {
     TopicosEvents.emit('VOLTAR_SLIDE')
     this._animate()
@@ -113,6 +100,19 @@ class Nav extends React.Component<{}, INavState> {
       </div>
 
     )
+  }
+
+  private _animate = async () => {
+    if (!this.line.current) return
+
+    const line = this.line.current
+    const time = getTransitionDelay(line)
+
+    line.classList.remove('active')
+
+    await wait(time - 1)
+
+    line.classList.add('active')
   }
 
   private _updateTopico = (obj: IndexSignature) =>
