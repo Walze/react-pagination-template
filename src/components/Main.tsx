@@ -8,10 +8,10 @@ import Topico from './topicos/Topico'
 import Nav from './nav/Nav'
 
 import INTRO from './slides/Intro'
-import U1S1 from './slides/uni1/U1S1'
-import U1S2 from './slides/uni1/U1S2'
-import U2S1 from './slides/uni2/U2S1'
-import U2S2 from './slides/uni2/U2S2'
+import T1S1 from './slides/topico1/T1S1';
+import T1S2 from './slides/topico1/T1S2';
+import T2S1 from './slides/topico2/T2S1';
+import T2S2 from './slides/topico2/T2S2';
 
 // interface IMainState { }
 
@@ -28,7 +28,7 @@ class Main extends React.Component<{}, {}> {
         <Nav />
 
         <div className="container">
-          <h1>Composição da Oferta</h1>
+          <h1>Title</h1>
           <br />
 
           <Topicos>
@@ -36,14 +36,14 @@ class Main extends React.Component<{}, {}> {
               <INTRO />
             </Topico>
 
-            <Topico key='1' titulo='Unidade 1' subTitulo='Categoria'>
-              <U1S1 />
-              <U1S2 />
+            <Topico key='1' titulo='Tópico 1' subTitulo='Sub-title 1'>
+              <T1S1 />
+              <T1S2 />
             </Topico>
 
-            <Topico key='2' titulo='Unidade 2' subTitulo='Título'>
-              <U2S1 />
-              <U2S2 />
+            <Topico key='2' titulo='Tópico 2' subTitulo='Sub-title 2'>
+              <T2S1 />
+              <T2S2 />
             </Topico>
 
           </Topicos>
