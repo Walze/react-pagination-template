@@ -7,6 +7,7 @@ import setaR from '../../img/seta2.svg'
 import TopicosStore from '../topicos/TopicosStore';
 import TopicosEvents from '../topicos/TopicosEvents';
 import { IndexSignature } from '../../types';
+import { wait, getTransitionDelay } from '../../helpers/animation';
 
 // interface INavProps {}
 
@@ -27,6 +28,7 @@ class Nav extends React.Component<{}, INavState> {
   }
 
   public menu: Menu | null
+  public line = React.createRef<HTMLDivElement>()
 
   public componentWillMount() {
     TopicosEvents.once('TOPICOS_CHANGE', this._updateTopicos)
@@ -39,6 +41,10 @@ class Nav extends React.Component<{}, INavState> {
     document.removeEventListener('keyup', this.handleKey)
   }
 
+  public componentDidMount() {
+    this._animate()
+  }
+
   public handleKey = (e: KeyboardEvent) => {
     const key = e.key
 
@@ -48,12 +54,27 @@ class Nav extends React.Component<{}, INavState> {
       this.avancar()
   }
 
+  private _animate = async () => {
+    if (!this.line.current) return
+
+    const line = this.line.current
+    const time = getTransitionDelay(line)
+
+    line.classList.remove('active')
+
+    await wait(time)
+
+    line.classList.add('active')
+  }
+
   public voltar = () => {
     TopicosEvents.emit('VOLTAR_SLIDE')
+    this._animate()
   }
 
   public avancar = () => {
     TopicosEvents.emit('AVANCAR_SLIDE')
+    this._animate()
   }
 
   public menuClick = () => {
@@ -70,7 +91,7 @@ class Nav extends React.Component<{}, INavState> {
           <span className='title'>
             {this.state.activeTopico.titulo}
           </span>
-          <div className="line" />
+          <div className="line" ref={this.line} />
           <span className='sub-title'>
             {this.state.activeTopico.subTitulo}
           </span>

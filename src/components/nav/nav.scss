@@ -7,6 +7,7 @@
 .nav {
   * {
     font-family: 'Crete Round';
+    transition: all .2s ease-in-out;
   }
   z-index: 2;
   position: fixed;
@@ -17,7 +18,6 @@
   height: 65px;
   .col {
     cursor: pointer;
-    transition: all .2s linear;
     &:hover {
       background: rgba($color: #fff, $alpha: .111)
     }
@@ -37,11 +37,14 @@
       }
       .line {
         border-radius: 5px;
-        width: 50%;
+        width: 0;
         height: 1px;
         background: #fff;
         margin: 1px 0;
         margin-bottom: 2px;
+        &.active {
+          width: 50%;
+        }
       }
       .sub-title {
         font-size: .8rem;

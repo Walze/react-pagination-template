@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom'
 
 type LeftOrRightStringType = 'left' | 'right'
 
+interface IAlternativas {
+  el: Element;
+  opcoes: Array<{
+    left: HTMLDivElement;
+    right: HTMLDivElement;
+  }>;
+}
+
 class Alternativas extends React.Component<{ certo: LeftOrRightStringType }> {
 
   public state = {
@@ -18,7 +26,7 @@ class Alternativas extends React.Component<{ certo: LeftOrRightStringType }> {
     })
   }
 
-  private _getObjState(div: Element) {
+  private _getObjState(div: Element): IAlternativas[] {
     return Array.from(div.querySelectorAll('.alternativas'))
       .map(el => {
         const alt = el
