@@ -42,7 +42,7 @@ class Nav extends React.Component<{}, INavState> {
   }
 
   public componentDidMount() {
-    this._animate()
+    this._afterEvent()
   }
 
   public handleKey = (e: KeyboardEvent) => {
@@ -56,12 +56,12 @@ class Nav extends React.Component<{}, INavState> {
 
   public voltar = () => {
     TopicosEvents.emit('VOLTAR_SLIDE')
-    this._animate()
+    this._afterEvent()
   }
 
   public avancar = () => {
     TopicosEvents.emit('AVANCAR_SLIDE')
-    this._animate()
+    this._afterEvent()
   }
 
   public menuClick = () => {
@@ -102,16 +102,16 @@ class Nav extends React.Component<{}, INavState> {
     )
   }
 
-  private _animate = async () => {
+  private _afterEvent = async () => {
+    window.scrollTo({ top: 0 })
+
     if (!this.line.current) return
 
     const line = this.line.current
     const time = getTransitionDelay(line)
 
     line.classList.remove('active')
-
     await wait(time - 1)
-
     line.classList.add('active')
   }
 
