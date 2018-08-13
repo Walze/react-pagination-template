@@ -1,5 +1,7 @@
 import { EventEmitter } from 'events'
 
+// tslint:disable:no-any
+
 type emitType<T> = (event: T, ...args: any[]) => boolean
 type onType<T> = (event: T, listener: (...args: any[]) => void) => void
 

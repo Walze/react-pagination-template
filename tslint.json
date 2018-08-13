@@ -14,7 +14,15 @@
         "ordered-imports": false,
         "object-literal-sort-keys": false,
         "max-line-length": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "no-import-side-effect": false,
+        "comment-format": false,
+        "member-ordering": false,
+        "typedef": false,
+        "no-default-export": false,
+        "no-unnecessary-class": false,
+        "no-magic-numbers": false,
+        "file-name-casing": false
     },
     "linterOptions": {
         "exclude": [

@@ -3,7 +3,12 @@
     height: 50px;
   }
 }
+
 .nav {
+  * {
+    font-family: 'Crete Round';
+    transition: all .2s ease-in-out;
+  }
   z-index: 2;
   position: fixed;
   bottom: 0;
@@ -13,7 +18,6 @@
   height: 65px;
   .col {
     cursor: pointer;
-    transition: all .2s linear;
     &:hover {
       background: rgba($color: #fff, $alpha: .111)
     }
@@ -26,13 +30,26 @@
     align-items: center;
     color: white;
     &.info {
+      flex-direction: column;
       .title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+      }
+      .line {
+        border-radius: 5px;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        margin: 1px 0;
+        margin-bottom: 2px;
+        &.active {
+          width: 50%;
+        }
       }
       .sub-title {
-        font-size: 1rem;
+        font-size: .8rem;
+        text-transform: uppercase;
       }
-      flex-direction: column;
     }
     &.seta {
       text-transform: uppercase;

@@ -10,4 +10,5 @@ type TopicoEvents =
     'SLIDE_CHANGE'
 
 
-export const TopicosEvents = new EventHandler<TopicoEvents>()
+const TopicosEvents = new EventHandler<TopicoEvents>()
+export default TopicosEvents

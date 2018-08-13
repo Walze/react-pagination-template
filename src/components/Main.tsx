@@ -1,12 +1,17 @@
 import * as React from 'react'
 
 import './main.scss'
-import Nav from './nav/Nav'
-import Slide1 from './slides/Slide1'
+import '../styles/alternativas.scss'
+import Topicos from './topicos/Topicos'
 import Topico from './topicos/Topico'
-import Slide2 from './slides/Slide2'
-import { Topicos } from './topicos/Topicos'
-import Slide3 from './slides/Slide3';
+
+import Nav from './nav/Nav'
+
+import INTRO from './slides/Intro'
+import T1S1 from './slides/topico1/T1S1';
+import T1S2 from './slides/topico1/T1S2';
+import T2S1 from './slides/topico2/T2S1';
+import T2S2 from './slides/topico2/T2S2';
 
 // interface IMainState { }
 
@@ -14,6 +19,7 @@ class Main extends React.Component<{}, {}> {
 
   public topicos: Topicos
 
+  // tslint:disable-next-line:prefer-function-over-method
   public render() {
     return (
 
@@ -22,24 +28,24 @@ class Main extends React.Component<{}, {}> {
         <Nav />
 
         <div className="container">
-          <h1>lorem</h1>
+          <h1>Title</h1>
+          <br />
 
           <Topicos>
-            <Topico key='0' nome='Topico #1'>
-
-              <Slide1 />
-              <Slide2 />
-              <Slide3 />
-
+            <Topico key='0' titulo='Introdução'>
+              <INTRO />
             </Topico>
 
-            <Topico key='1' nome='Topico #2'>
-
-              <Slide2 />
-              <Slide3 />
-              <Slide1 />
-
+            <Topico key='1' titulo='Tópico 1' subTitulo='Sub-title 1'>
+              <T1S1 />
+              <T1S2 />
             </Topico>
+
+            <Topico key='2' titulo='Tópico 2' subTitulo='Sub-title 2'>
+              <T2S1 />
+              <T2S2 />
+            </Topico>
+
           </Topicos>
 
         </div>
